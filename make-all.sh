@@ -16,9 +16,10 @@ for source in src/**/; do
   echo "Building $source"
   ( 
   target=`echo "$source" | sed -e 's|src|build|'`
-  target+="index.html"
   if [ ! -e "$target" ]; then
     mkdir -p "$target"
+    target+="index.html"
     ./category.sh "$source" > "$target"
   fi ) &
 done
+
