@@ -1,0 +1,129 @@
+html {font-size: 1em;}
+
+body {
+  margin: 0em;
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #333;
+}
+
+p {margin-bottom: 1.3em;}
+
+h1, h2, h3, h4 {
+  margin: 1.414em 0 0.5em;
+  font-weight: inherit;
+  line-height: 1.2;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 3.998em;
+}
+
+h2 {font-size: 2.827em;}
+
+h3 {font-size: 1.999em;}
+
+h4 {font-size: 1.414em;}
+
+small, .font_small {font-size: 0.707em;}
+
+cite {
+  font-size: smaller;
+}
+
+cite::before {
+  color: grey;
+  content: '—from ';
+}
+
+#site-header {
+  display: flex;
+  align-content:center;
+  text-align:center;
+  justify-content: center;
+  position: fixed;
+  height: 25vh;
+  width:100%;
+  top: 0;
+  overflow: hidden;
+  z-index: -1;
+  background-image: url('https://i.imgur.com/U4qgKje.png');
+  background-size: cover;
+  background-position: center;
+}
+
+#site-header > h1 {
+  display:block;
+  align-self: center;
+  color: white;
+}
+
+#article {
+  line-height:2;
+  background-color:white;
+  margin-top: 25vh;
+  position:relative;
+  z-index: 1;
+  padding: 2vmin;
+}
+
+#article > div {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content	: space-between;
+}
+
+#article-nav {
+  flex: 0;
+  min-width: -webkit-min-content;
+  min-width: -moz-min-content;
+  position: sticky;
+  top: 0;
+  height: 100%;
+  margin-right:2em;
+}
+
+#article-nav h2:first-of-type {
+  margin-top:0;
+}
+
+#article header {
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  width: 100%;
+  align-self: flex-start;
+  border-bottom: 1px #888 solid;
+}
+
+#article header h1 {
+  margin-bottom: 0;
+}
+
+#content {
+  flex: 1 1 0%;
+  max-width: 50em;
+  min-width: 30em;
+  margin: 0px auto;
+  z-index:1;
+  background-color: #fff;
+}
+
+/*
+#content > p,
+#content > blockquote {
+  margin: 0 auto;
+    margin-bottom: 1.3em;
+  max-width: 40em;
+}
+
+@media only screen 
+  and (max-device-width: 480px) {
+  #article > div {
+  display: flex;
+  flex-direction: column;
+}
+
+}*/
