@@ -54,10 +54,16 @@ cite::before {
   background-position: center;
 }
 
+#site-header a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 #site-header > h1 {
   display:block;
   align-self: center;
   color: white;
+  font-variant: small-caps;
 }
 
 #article {
