@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ -z "$BASE"]; then
-  BASE=$(readlink -f "$0" | xargs printf 'file://%s/build/')
+  BASE=$(readlink -f . | xargs printf 'file://%s/build/')
 fi
 cat << _EOF_
 <!DOCTYPE html>
@@ -16,7 +16,7 @@ cat << _EOF_
   </head>
   <body>
     <header id="site-header">
-      <h1>Encyclopedia Brunoniana</h1>
+      <h1><a href=".">Encyclopedia Brunoniana</a></h1>
     </header>
     `while read line
     do
