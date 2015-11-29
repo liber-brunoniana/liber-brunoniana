@@ -1,17 +1,16 @@
 #!/bin/sh
-cat | ./page.sh << _EOF_
-<article id="category">
+./page.sh << _EOF_
+<article id="article">
   <header>
-    <h1>`basename "$1"`</h1>
+    <h1>`basename "$1" .html`</h1>
   </header>
   <div>
     <nav id="article-nav">
       <nav id="categories">
         <h2>Categories</h2>
         <ul>
-       `find -L ./ -samefile "$1" -print0  \
-          | xargs -0 dirname -z            \
-          | sed 's|./src/|./|'             \
+       `find -L ./src -samefile "$1" -printf "%P\0"  \
+          | xargs -0 dirname -z               \
           | while read -d $'' category; do
               echo "<li><a href=\"$category\">$(basename "$category")</a></li>"                                            \  
             done`
@@ -20,13 +19,9 @@ cat | ./page.sh << _EOF_
     </nav>
     <section id="content">
       <section>
-        <header><h2>Subcategories</h2></header>
-
-      </section>
-      <section>
         <header><h2>Articles</h2></header>
-        `find "$1" -type f -maxdepth 1 -print0  \
-          | sed 's|src/||g'             \
+        `find "$1" -maxdepth 1 -type f -printf "%p\0" \
+          | sed -e 's|src/||g' \
           | while read -d $'' article; do
               echo "<li><a href=\"$article\">$(basename "$article" .html)</a></li>"                                            \  
             done`
