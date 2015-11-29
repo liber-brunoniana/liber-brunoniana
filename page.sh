@@ -1,9 +1,12 @@
 #!/bin/sh
+if [ -z "$BASE"]; then
+  BASE=$(readlink -f "$0" | xargs printf 'file://%s/build/')
+fi
 cat << _EOF_
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <base href="file:///home/john/projects/brunoniana/liber-brunoniana/build/"/>
+    <base href="`echo $BASE`"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>$1</title>
