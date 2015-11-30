@@ -22,4 +22,6 @@ for source in src/**/*.html; do
   fi ) &
 done
 
+wait
+
 cp ./style.css ./build/style.css
