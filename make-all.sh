@@ -22,3 +22,4 @@ for source in src/**/*.html; do
   fi ) &
 done
 
+cp ./style.css ./build/style.css

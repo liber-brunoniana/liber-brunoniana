@@ -12,7 +12,7 @@ cat << _EOF_
     <title>$1</title>
     <link href='http://fonts.googleapis.com/css?family=IM+Fell+English:400,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Libre+Baskerville:400' rel='stylesheet' type='text/css'>
-    <link href='../style.css' rel='stylesheet' type='text/css'>
+    <link href='./style.css' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <header id="site-header">
