@@ -1,5 +1,53 @@
-html {font-size: 1em;}
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
 
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* TYPE SCALE *********************************************************/
 body {
   margin: 0em;
   font-family: 'Libre Baskerville', serif;
@@ -28,108 +76,212 @@ h3 {font-size: 1.999em;}
 h4 {font-size: 1.414em;}
 
 small, .font_small {font-size: 0.707em;}
+/**********************************************************************/
 
-cite {
-  font-size: smaller;
-}
+/* Let's dim hyperlinks just slightly */
+a {color: darkblue;}
+a:visited {color:darkcyan}
 
+
+
+cite {font-size: smaller;}
 cite::before {
   color: grey;
   content: '—from ';
 }
 
-#site-header {
-  display: flex;
-  align-content:center;
-  text-align:center;
-  justify-content: center;
-  position: fixed;
-  height: 25vh;
-  width:100%;
-  top: 0;
-  overflow: hidden;
-  z-index: -1;
-  background-image: url('https://i.imgur.com/U4qgKje.png');
-  background-size: cover;
-  background-position: center;
+blockquote {
+  /* Place a dark left border on blockquotes */
+  border-color: #333;
+  border-width: 0 0 0 3px;
+  border-style: solid;
+  
+  /* Pad both sides to distinguish it from text */
+  padding-left: 2em;
+  padding-right: 2em;
+  
+  /* And shrink the font ever so slightly */
+  font-size:95%;
+  
+  margin-start: 0;
+  -webkit-margin-start: 0;
+  
+  margin-block-start: 1em;
+  -webkit-margin-before: 1em;
+  
+  margin-block-end: 1em;
+  -webkit-margin-end: 1em;
+  
+  -webkit-margin-after: 1em;
 }
 
-#site-header a {
-  color: inherit;
-  text-decoration: inherit;
-}
 
-#site-header > h1 {
-  display:block;
-  align-self: center;
-  color: white;
-  font-variant: small-caps;
-}
+/* On screens... */
+@media screen {
+  #site-header {
+    /* Center the contents of the site header */
+    display: flex;
+    align-content:center;
+    justify-content: center;
+    text-align:center;
+    
+    /* Give it a cool in-the-background effect */
+    position: fixed;
+    height: 25vh;
+    width:100%;
+    top: 0;
+    overflow: hidden;
+    z-index: -1;
+    
+    /* And a pretty picture */
+    background-image: url('https://i.imgur.com/U4qgKje.png');
+    background-size: cover;
+    background-position: center;
+  }
 
-#article {
-  line-height:2;
-  background-color:white;
-  margin-top: 25vh;
-  position:relative;
-  z-index: 1;
-  padding: 2vmin;
-}
+  /* Don't highlight the header link */
+  #site-header a {
+    color: inherit;
+    text-decoration: inherit;
+  }
 
-#article > div {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content	: space-between;
-}
+  /* Typographic styling of header */
+  #site-header > h1 {
+    display:block;
+    align-self: center;
+    color: white;
+    font-variant: small-caps;
+  }
 
-#article-nav {
-  flex: 0;
-  min-width: -webkit-min-content;
-  min-width: -moz-min-content;
-  position: sticky;
-  top: 0;
-  height: 100%;
-  margin-right:2em;
-}
+  /* Typographic styling of article */
+  #article {
+    min-height: 96vh;
+    line-height:2;
+    background-color:white;
+    margin-top: 25vh;
+    position:relative;
+    z-index: 1;
+    padding: 2vmin;
+  }
 
-#article-nav h2:first-of-type {
-  margin-top:0;
-}
-
-#article header {
-  padding-bottom: 1em;
-  margin-bottom: 1em;
-  width: 100%;
-  align-self: flex-start;
-  border-bottom: 1px #888 solid;
-}
-
-#article header h1 {
-  margin-bottom: 0;
-}
-
-#content {
-  flex: 1 1 0%;
-  max-width: 50em;
-  min-width: 30em;
-  margin: 0px auto;
-  z-index:1;
-  background-color: #fff;
-}
-
-/*
-#content > p,
-#content > blockquote {
-  margin: 0 auto;
-    margin-bottom: 1.3em;
-  max-width: 40em;
-}
-
-@media only screen 
-  and (max-device-width: 480px) {
   #article > div {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content	: space-between;
+  }
+
+  #article-nav {
+    flex: 0;
+    min-width: -webkit-min-content;
+    min-width: -moz-min-content;
+    position: sticky;
+    top: 0;
+    height: 100%;
+    margin-right:2em;
+  }
+
+  #article-nav h2:first-of-type {
+    margin-top:0;
+  }
+
+  #article header {
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    width: 100%;
+    align-self: flex-start;
+    border-bottom: 1px #888 solid;
+  }
+
+
+  #article header h1 {
+    margin-bottom: 0;
+  }
+
+  #content {
+    flex: 1 1 0%;
+    max-width: 40em;
+    margin: 0px auto;
+    z-index:1;
+    background-color: #fff;
+  }
 }
 
-}*/
+
+@media print {
+  /* Print Type Scale (Make headings a little smaller) */
+  html {font-size: 10pt;}
+  body {line-height: 1.75;}
+  h1,h2,h3,h4{margin: 1.414em 0 0.2em;}
+  h1 {font-size: 2.441em;margin-top:0;}
+  h2 {font-size: 1.953em;}
+  h3 {font-size: 1.563em;}
+  h4 {font-size: 1.25em;}
+  small, .font_small {font-size: 0.8em;}
+  
+  /* Avoid Page Breaks inside Headers */
+  h1, h2, h3, h4 {
+    page-break-inside : avoid;
+    break-after: avoid;
+    page-break-after: avoid;
+    -webkit-column-break-after: avoid;
+  }
+  
+  /* Avoid Orphans & Widows */
+  section, p {
+    widows: 3;
+    orphans: 3;
+  }
+  
+  /* Indent First Paragraph after Header */
+  h1 + p, h2 + p, h3 + p, h4 + p, 
+  p:first-child {
+    text-indent: 1em;
+  }
+  
+  /* Style the headers appropriately for print */
+  #site-header,
+  #article > header {
+    text-align: center;
+  }
+  
+  #article > header {
+    border: none;
+  }
+  
+  
+  #site-header {
+    font-size: 50%;
+    font-variant: small-caps;
+  }
+  
+  /* Since you can't use hyperlinks in print, make them the same color
+   * as text */
+  a {
+    color: initial;
+    text-decoration: initial;
+  }
+
+  /* Don't bother showing categories or table of contents, since those
+   * are navigation elements. */
+  #article-nav {
+    display: none;
+  }
+
+  /* Center the article text on the page and limit its maximum width */
+  #content {
+    margin: 0 auto;
+    max-width: 35em;
+  }
+  
+    /* On firefox, use multi-column layout */
+  @-moz-document url-prefix() { 
+    #content {
+      max-width: initial;
+      -moz-column-gap: 2em; 
+      -moz-column-fill: balance; 
+      -moz-column-width: 20em;
+    }
+  }
+
+}
