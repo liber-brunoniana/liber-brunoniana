@@ -1,6 +1,6 @@
 #!/bin/sh
-if [ -z "$BASE"]; then
-  BASE=$(readlink -f . | xargs printf 'file://%s/build/')
+if [ -z "${BASE+x}" ] ; then
+  BASE=$(readlink -f . | xargs printf 'file://%s/build/');
 fi
 cat << _EOF_
 <!DOCTYPE html>

@@ -14,4 +14,4 @@ git push -u origin master --force
 popd >/dev/null
 popd >/dev/null
 rm -rf $dir
-unset $BASE
+unset BASE
