@@ -9,9 +9,8 @@ cat << _EOF_
     <base href="`echo $BASE`"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>$1</title>
-    <link href='http://fonts.googleapis.com/css?family=IM+Fell+English:400,400italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Libre+Baskerville:400' rel='stylesheet' type='text/css'>
+    <title>`echo "$1"`</title>
+    <link href='http://fonts.googleapis.com/css?family=|Libre+Baskerville:400,700' rel='stylesheet' type='text/css'>
     <link href='./style.css' rel='stylesheet' type='text/css'>
   </head>
   <body>
@@ -21,7 +20,7 @@ cat << _EOF_
     `while read line
     do
       echo "$line"
-    done < "${1:-/dev/stdin}"`
+    done < "${2:-/dev/stdin}"`
   </body>
 </html>
 _EOF_

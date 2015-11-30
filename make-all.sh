@@ -14,9 +14,9 @@ done
 
 echo "Compiling Articles"
 for source in src/**/*.html; do
-  echo "Building $source"
   ( target=`echo "$source" | sed -e 's|src|build|'`
   if [ ! -e "$target" ] || [ "$target" -ot "$source" ]; then
+    echo "Building $source"
     mkdir -p `dirname "$target"`
     ./article.sh "$source" > "$target"
   fi ) &

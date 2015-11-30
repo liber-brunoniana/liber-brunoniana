@@ -1,8 +1,9 @@
 #!/bin/sh
-./page.sh << _EOF_
+NAME="`basename "$1" .html`"
+(./page.sh "$NAME") << _EOF_
 <article id="article">
   <header>
-    <h1>`basename "$1" .html`</h1>
+    <h1>`echo "$NAME"`</h1>
   </header>
   <div>
     <nav id="article-nav">
