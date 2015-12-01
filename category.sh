@@ -14,7 +14,6 @@
     <nav id="categories">
       <h2>Categories</h2>
       <ul>
-        <li>placeholder</li>
       `categories "$1"`
       </ul>
     </nav>
