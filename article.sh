@@ -1,26 +1,21 @@
 #!/bin/sh
+. ./util.sh
 NAME="`basename "$1" .html`"
 (./page.sh "$NAME") << _EOF_
 <article id="article">
-  <header>
+  <header id="page-header">
     <h1>`echo "$NAME"`</h1>
   </header>
-  <div>
-    <nav id="article-nav">
-      <nav id="categories">
-        <h2>Categories</h2>
-        <ul>
-       `find -L ./src -samefile "$1" -printf "%P\0"  \
-          | xargs -0 dirname -z               \
-          | while read -d $'' category; do
-              echo "<li><a href=\"$category\">$(basename "$category")</a></li>"                                            \  
-            done`
-        </ul>
-      </nav>
+  <nav id="article-nav">
+    <nav id="categories">
+      <h2>Categories</h2>
+      <ul>
+     `categories "$1"`
+      </ul>
     </nav>
-    <section id="content">
-      `cat "$1"`
-    </section>
-  </div>
+  </nav>
+  <section id="content">
+    `cat "$1"`
+  </section>
 </article>
 _EOF_

@@ -1,25 +1,24 @@
 #!/bin/sh
 
 echo "Compiling Categories"
-for source in src/**/; do
-  echo "Building $source"
+find ./src -type d -print0 | while read -d $'' source; do
+  echo "$source"
   target=`echo "$source" | sed -e 's|src|build|'`
   if [ ! -e "$target" ]; then
     mkdir -p "$target"
-    target+="index.html"
-    echo "Writing $target"
+    target+="/index.html"
     ./category.sh "$source" > "$target"
   fi
 done
 
 echo "Compiling Articles"
-for source in src/**/*.html; do
-  ( target=`echo "$source" | sed -e 's|src|build|'`
+find ./src  -name "*.html" -print0 | while read -d $'' source; do
+  (target=`echo "$source" | sed -e 's|src|build|'`
   if [ ! -e "$target" ] || [ "$target" -ot "$source" ]; then
-    echo "Building $source"
+    echo "$source"
     mkdir -p `dirname "$target"`
     ./article.sh "$source" > "$target"
-  fi ) &
+  fi) &
 done
 
 wait
