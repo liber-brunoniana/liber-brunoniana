@@ -62,6 +62,9 @@ a:visited {color:darkcyan}
   padding-bottom: 1em;
   margin-bottom: 1em;
   border-bottom: 1px #888 solid;
+  height: min-content;
+  height: -moz-min-content;
+  height: -webkit-min-content;
 }
 
 #page-header > h1 {
