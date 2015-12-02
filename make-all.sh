@@ -1,5 +1,6 @@
 #!/bin/sh
-
+export SRC="src"
+export NAME="Liber Brunoniana"
 echo "Compiling Categories"
 find ./src -type d -print0 | while read -d $'' source; do
   echo "$source"

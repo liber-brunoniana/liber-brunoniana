@@ -4,8 +4,8 @@
 <article id="category">
   <header id="page-header">
     <h1>`
-      if [ "$1" == "./src" ] ; then
-        echo "$(basename $(realpath .))"
+      if [ "$1" == "./$SRC" ] ; then
+        echo "$NAME"
       else
         echo "$(basename $1)"
       fi`</h1>
@@ -23,7 +23,7 @@
       <header><h2>Subcategories</h2></header>
       <ul>
       `find "$1" -mindepth 1 -maxdepth 1 -name "[!.]*" -type d -follow -printf "%p\0" \
-        | sed -e 's|src/||g' \
+        | sed -e 's|$src/||g' \
         | while read -d $'' category; do
             echo "<li><a href=\"$category\">$(basename "$category" .html)</a></li>"                                            \  
           done`
