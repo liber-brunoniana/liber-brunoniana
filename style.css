@@ -1,4 +1,5 @@
 /* TYPE SCALE *********************************************************/
+/* type-scale.com */
 body {
   margin: 0em;
   font-family: 'Libre Baskerville', serif;
@@ -9,10 +10,15 @@ body {
 
 p {margin-bottom: 1.3em;}
 
-h1, h2:not(:first-child), h3, h4 {
+h1, h2, h3, h4 {
   margin: 1.414em 0 0.5em;
   font-weight: inherit;
   line-height: 1.2;
+}
+
+h2:first-child {
+  margin-top:0;
+  margin-bottom:0;
 }
 
 h1 {
@@ -32,32 +38,6 @@ small, .font_small {font-size: 0.707em;}
 a {color: darkblue;}
 a:visited {color:darkcyan}
 
-#article-nav h2 {
-  margin-bottom: 0;
-}
-
-#article,
-#category {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-content: flex-start;
-  justify-content	: space-between;
-  
-  min-height: 100vh;
-  
-  margin-top: 25vh;
-  line-height: 2;
-  background-color:white;
-  position:relative;
-  z-index: 1;
-}
-
-#article > *,
-#category > * {
-  margin: 2vmin;
-}
-
 #page-header {
   width: 100%;
   padding-bottom: 1em;
@@ -72,12 +52,6 @@ a:visited {color:darkcyan}
   margin-bottom: 0;
 }
 
-/* Styling Specific to Article Pages */
-#article > #content {
-  max-width: 40em;
-  margin-left: auto;
-  margin-right: auto;
-}
 
 /* Styling Specific to Category Pages */
 #category > #content {
@@ -105,32 +79,39 @@ blockquote {
   
   /* Pad both sides to distinguish it from text */
   padding-left: 2em;
-  padding-right: 2em;
   
   /* And shrink the font ever so slightly */
-  font-size:95%;
+  font-size:90%;
   
   margin-start: 0;
-  -webkit-margin-start: 0;
-  
+  margin-inline-start: 0;
+  margin-inline-end: 0;
   margin-block-start: 1em;
-  -webkit-margin-before: 1em;
-  
   margin-block-end: 1em;
-  -webkit-margin-end: 1em;
   
+  /* left */
+  -webkit-margin-start: 0;
+  /* top */
+  -webkit-margin-before: 1em;
+  /* right */
+  -webkit-margin-end: 0em;
+  /* bottom */
   -webkit-margin-after: 1em;
+  
 }
 
 ul, ol {
   list-style: disc outside none;
-  -webkit-padding-start: 40px;
+  margin-left: 1em;
+  margin-top: 0;
 }
 
 li { margin-bottom: 0.2em;}
 
 /* On screens... */
 @media screen {
+  
+  
   #site-header {
     /* Center the contents of the site header */
     display: flex;
@@ -166,21 +147,66 @@ li { margin-bottom: 0.2em;}
     font-weight: 700;
     font-variant: small-caps;
   }
+  
+  #article,
+  #category {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+    align-items: flex-start;
+    justify-content	: space-between;
+    
+    min-height: 100vh;
+    
+    margin-top: 25vh;
+    line-height: 2;
+    background-color:white;
+    position:relative;
+    z-index: 1;
+  }
+  
+  #article-nav h2 {
+    margin-bottom: 0;
+  }
+
+
+  #article > *,
+  #category > * {
+    margin: 2vmin;
+  }
+  
+  /* Styling Specific to Article Pages */
+  #article > #content {
+    max-width: 40em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  #page-nav {
+    position: sticky;
+    top: 0;
+  }
+}
+
+#page-nav h2 + ul:empty::before {
+  content: "This page isn't in any categories.";
+  font-size: smaller;
 }
 
 
 
 
+@page {
+  margin: 1in;
+}
 
 
 
-
-
-
-@media print {
+@media only print {
   /* Print Type Scale (Make headings a little smaller) */
   html {font-size: 10pt;}
-  body {line-height: 1.75;}
+  body {line-height: 1.75}
   h1,h2,h3,h4{margin: 1.414em 0 0.2em;}
   h1 {font-size: 2.441em;margin-top:0;}
   h2 {font-size: 1.953em;}
@@ -226,18 +252,16 @@ li { margin-bottom: 0.2em;}
   
   /* Since you can't use hyperlinks in print, make them the same color
    * as text */
-  a {
+  a, a:visited {
     color: #000;
     text-decoration: none;
   }
 
   /* Don't bother showing categories or table of contents, since those
    * are navigation elements. */
-  #article-nav {
-    display: none;
-  }
-
-  /* Center the article text on the page and limit its maximum width */
+  #page-nav {display: none;}
+  
+  
   #content {
     margin: 0 auto;
     max-width: 35em;

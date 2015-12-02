@@ -6,12 +6,10 @@ NAME="`basename "$1" .html`"
   <header id="page-header">
     <h1>`echo "$NAME"`</h1>
   </header>
-  <nav id="article-nav">
+  <nav id="page-nav">
     <nav id="categories">
       <h2>Categories</h2>
-      <ul>
-     `categories "$1"`
-      </ul>
+      <ul>`categories "$1"`</ul>
     </nav>
   </nav>
   <section id="content">
