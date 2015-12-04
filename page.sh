@@ -14,7 +14,7 @@ cat << _EOF_
   </head>
   <body>
     <header id="site-header">
-      <h1><a href=".">Encyclopedia Brunoniana</a></h1>
+      <h1><a href="$BASE">Encyclopedia Brunoniana</a></h1>
     </header>
     `while read line
     do
