@@ -1,20 +1,14 @@
 #!/bin/bash
 function categories() {
-  find -L ./src -samefile "$1" -printf "%p\0"  \
-    | xargs -0 dirname -z                      \
-    | while read -d $'' category; do
-        if [ "$category" == "." ]
-        then
-          echo ""
-        else
-          href=$(echo "$category" | sed -e "s|src/||")
-          if [ "$category" == "./src" ]
-          then
-            text=$(realpath .. | xargs basename)
-          else
-            text="$(basename "$category")"
-          fi
-          echo "<li><a href=\"$href\">$text</a></li>"
-        fi
-      done
+  find -L . -samefile "$1" -print0  \
+    | xargs -0 dirname -z           \
+    | while read -d $'' category
+    do
+      href=`realpath "$category" --relative-to "$1"`
+      name=`basename "$category"` 
+      if [ "$name" == "." ] ; then 
+        name="$SITE_NAME"
+      fi
+      echo "<li><a href=\"$href\">$name</a></li>"
+    done
 }

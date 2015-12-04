@@ -1,7 +1,7 @@
 #!/bin/sh
-. ./util.sh
-NAME="`basename "$1" .html`"
-(./page.sh "$NAME") << _EOF_
+. ../util.sh
+NAME=`basename "$1" .html`
+../page.sh "$NAME" << _EOF_
 <article id="article">
   <header id="page-header">
     <h1>`echo "$NAME"`</h1>

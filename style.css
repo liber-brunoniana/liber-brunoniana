@@ -57,6 +57,9 @@ a:visited {color:darkcyan}
 #category > #content {
   flex: 1;
   -webkit-column-width: 20em;
+  min-width: min-content;
+  min-width: -webkit-min-content;
+  min-width: -moz-min-content;
 }
 #category > #content header {
   -webkit-column-span: all;
@@ -178,6 +181,7 @@ li { margin-bottom: 0.2em;}
   
   /* Styling Specific to Article Pages */
   #article > #content {
+    flex: 1;
     max-width: 40em;
     margin-left: auto;
     margin-right: auto;
@@ -187,6 +191,10 @@ li { margin-bottom: 0.2em;}
     position: sticky;
     top: 0;
   }
+}
+
+#page-nav h2 + ul:empty {
+  padding: 0;
 }
 
 #page-nav h2 + ul:empty::before {
