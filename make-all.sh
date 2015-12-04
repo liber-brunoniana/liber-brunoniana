@@ -7,23 +7,23 @@ pushd "$SRC" >/dev/null
 echo "Compiling Categories"
 
 find . -type d -print0 | while read -d $'' source; do
- (target="../build/$source"
+  target="../build/$source"
   mkdir -p "$target"
   target+="/index.html"
   ../category.sh "$source" > "$target"
-  echo "$source") &
+  echo "$source"
 done
 
 echo "Compiling Articles"
 find . -type f -name "*.html" -print0 | while read -d $'' source ; do
   echo "$source"
- (target="../build/$source"
+  target="../build/$source"
   if [ ! -e "$target" ] || [ "$target" -ot "$source" ]; then
     echo "$source"
     mkdir -p `dirname "../build/$target"`
     ../article.sh "$source" > "$target"
-  fi) &
-done && wait
+  fi
+done
     
 popd >/dev/null
 cp ./style.css ./build/style.css
