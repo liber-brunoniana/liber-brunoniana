@@ -14,13 +14,6 @@ find . -type d -print0 | while read -d $'' source; do
   echo "$source"
 done
 
-echo "Copy Symlinks"
-find . -type l -print0 | while read -d $'' source; do
-  target="../build/$source"
-  cp -d "$source" "$target"
-  echo "$source"
-done
-
 echo "Compiling Articles"
 find . -type f -name "*.html" -print0 | while read -d $'' source ; do
   echo "$source"
