@@ -1,3 +1,52 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 /* TYPE SCALE *********************************************************/
 /* type-scale.com */
 body {
@@ -11,14 +60,9 @@ body {
 p {margin-bottom: 1.3em;}
 
 h1, h2, h3, h4 {
-  margin: 1.414em 0 0.5em;
+  margin: 1.414em 0 0.2em;
   font-weight: inherit;
   line-height: 1.2;
-}
-
-h2:first-child {
-  margin-top:0;
-  margin-bottom:0;
 }
 
 h1 {
@@ -29,10 +73,8 @@ h1 {
 h2 {font-size: 2.827em;}
 h3 {font-size: 1.999em;}
 h4 {font-size: 1.414em;}
-
-small, .font_small {font-size: 0.707em;}
+small {font-size: 0.707em;}
 /**********************************************************************/
-
 
 /* Let's dim hyperlinks just slightly */
 a {color: darkblue;}
@@ -53,6 +95,7 @@ a:visited {color:darkcyan}
 }
 
 
+
 /* Styling Specific to Category Pages */
 #category > #content {
   flex: 1;
@@ -64,9 +107,12 @@ a:visited {color:darkcyan}
 #category > #content header {
   -webkit-column-span: all;
 }
-
-
-
+#subcategories > ul:empty {
+  -webkit-column-span: all;
+}
+#subcategories > ul:empty:after {
+  content: "There are no sub-categories.";
+}
 
 cite {font-size: smaller;}
 cite::before {
@@ -103,17 +149,10 @@ blockquote {
   
 }
 
-ul, ol {
-  list-style: disc outside none;
-  margin-left: 1em;
-  margin-top: 0;
-}
-
 li { margin-bottom: 0.2em;}
 
 /* On screens... */
-@media screen {
-  
+@media not print {
   
   #site-header {
     /* Center the contents of the site header */
@@ -160,6 +199,7 @@ li { margin-bottom: 0.2em;}
     align-items: flex-start;
     justify-content	: space-between;
     
+    padding: 1em;
     min-height: 100vh;
     
     margin-top: 25vh;
@@ -169,14 +209,11 @@ li { margin-bottom: 0.2em;}
     z-index: 1;
   }
   
-  #article-nav h2 {
-    margin-bottom: 0;
-  }
 
 
   #article > *,
   #category > * {
-    margin: 2vmin;
+    #margin: 1em;
   }
   
   /* Styling Specific to Article Pages */
@@ -185,42 +222,63 @@ li { margin-bottom: 0.2em;}
     max-width: 40em;
     margin-left: auto;
     margin-right: auto;
+    padding: 1em;
   }
   
   #page-nav {
+    margin-right: 2em;
     position: sticky;
     top: 0;
   }
 }
 
-#page-nav h2 + ul:empty {
-  padding: 0;
+#categories ul { list-style: disc inside none; }
+#article #content ul { list-style: disc outside none; }
+
+#categories h2,
+#subcategories h2 {
+  margin-top:0em;
 }
 
-#page-nav h2 + ul:empty::before {
-  content: "This page isn't in any categories.";
-  font-size: smaller;
+/**********************************************************************/
+
+@media only screen and (max-width : 700px) {
+  /* Augmented 4th Scale */
+  h1 {font-size: 3.157em;}
+  h2 {font-size: 2.369em;}
+  h3 {font-size: 1.777em;}
+  h4 {font-size: 1.333em;}
+  small {font-size: 0.75em;}
+  
+  #page-header {
+    width: initial;
+    align-self: stretch;
+  }
+  
+  #subcategories h2 {
+    margin-top:1.414em;;
+  }
+  
+  /* Ditch the article side bar */
+  #article, #category {
+    flex-direction: column;
+  }
 }
 
-
-
+/**********************************************************************/
 
 @page {
   margin: 1in;
 }
 
-
-
 @media only print {
   /* Print Type Scale (Make headings a little smaller) */
-  html {font-size: 10pt;}
-  body {line-height: 1.75}
-  h1,h2,h3,h4{margin: 1.414em 0 0.2em;}
-  h1 {font-size: 2.441em;margin-top:0;}
-  h2 {font-size: 1.953em;}
-  h3 {font-size: 1.563em;}
-  h4 {font-size: 1.25em;}
-  small, .font_small {font-size: 0.8em;}
+  html  {font-size:    10pt;}
+  h1    {font-size: 2.441em;}
+  h2    {font-size: 1.953em;}
+  h3    {font-size: 1.563em;}
+  h4    {font-size: 1.25em;}
+  small {font-size: 0.8em;}
   
   /* Avoid Page Breaks inside Headers */
   h1, h2, h3, h4 {
