@@ -19,7 +19,6 @@ find . -type f -name "*.html" -print0 | while read -d $'' source ; do
   echo "$source"
   target="../build/$source"
   if [ ! -e "$target" ] || [ "$target" -ot "$source" ]; then
-    echo "$source"
     mkdir -p `dirname "../build/$target"`
     ../article.sh "$source" > "$target"
   fi

@@ -4,8 +4,9 @@ dir=`mktemp -d` && pushd $dir  >/dev/null
 echo $dir
 git clone https://github.com/liber-brunoniana/liber-brunoniana.git .
 export BASE="http://liber-brunoniana.github.io/"
-./make-all.sh
+BUILDTIME="`time ./make-all.sh`"
 pushd build  >/dev/null
+touch .nojekyll
 git init
 git remote add origin https://github.com/liber-brunoniana/liber-brunoniana.github.io.git
 git add -A .
@@ -15,3 +16,4 @@ popd >/dev/null
 popd >/dev/null
 rm -rf $dir
 unset BASE
+echo "$BUILDTIME"
