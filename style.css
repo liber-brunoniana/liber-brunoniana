@@ -86,6 +86,7 @@ a:visited {color:darkcyan}
   margin-bottom: 1em;
   border-bottom: 1px #888 solid;
   height: min-content;
+  height: -ms-min-content;
   height: -moz-min-content;
   height: -webkit-min-content;
 }
@@ -99,22 +100,31 @@ a:visited {color:darkcyan}
 /* Styling Specific to Category Pages */
 #category > #content {
   flex: 1;
+  column-width: 20em;
+  -ms-column-width: 20em;
+  -moz-column-width: 20em;
   -webkit-column-width: 20em;
   min-width: min-content;
-  min-width: -webkit-min-content;
+  min-width: -ms-min-content;
   min-width: -moz-min-content;
+  min-width: -webkit-min-content;
 }
 #category > #content header {
+  column-span: all;
+  -ms-column-span: all;
+  -moz-column-span: all;
   -webkit-column-span: all;
 }
-#subcategories > ul:empty {
+#subcategories > ul:empty,
+#pages > ul:empty {
+  column-span: all;
+  -ms-column-span: all;
+  -moz-column-span: all;
   -webkit-column-span: all;
 }
+
 #subcategories > ul:empty:after {
   content: "There are no subcategories.";
-}
-#pages > ul:empty {
-  -webkit-column-span: all;
 }
 #pages > ul:empty:after {
   content: "There are no pages.";
