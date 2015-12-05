@@ -1,0 +1,48 @@
+<p>Since its publication in 1993, Martha Mitchell's 629 page <i>Encyclopedia Brunoniana</i> has served as the definitive reference work of Brown University's history. Its 668 articles document the University's <a href="../Topics/Buildings">buildings</a>, <a href="../Topics/Departments">departments</a>, <a href="../Topics/People">people</a>, and <a href="../Topics/Publications">publications</a>. The <i>Liber Brunoniana</i> project utilizes natural language processing techniques to transform Mitchell's text into hypertext, automatically inferring over 5,000 hyperlinks between articles, deliminating content into categories, and constructing pages detailing the events of <a href="./Topics/Years">each year</a> mentioned in the encyclopedia. This article details the techniques used to construct <i>Liber Brunoniana</i>, a book freed from the limitations of paper.</p>
+
+<section><h2>Aquisition</h2> 
+  <p>The possibility of creating <i>Liber Brunoniana</i> owes itself to Brown's longstanding distribution of a basic <a href="http://www.brown.edu/Administration/News_Bureau/Databases/Encyclopedia/">online edition of Encyclopedia Brunoniana</a>. We used a <a href="https://github.com/liber-brunoniana/scraper">simple python</a> script to scrape the article text of this online edition. The faithful rendition of the text into mostly semantic HTML (blockquotes are enclosed in the appropriate tag, for example), eased the subsequent steps of transforming the text using rule-based natural language processing, and transforming the markup for our presentation.</p> 
+</section>
+
+<section><h2>Transformation</h2>
+  <p>Nonwithstanding presentation, the current online edition of <i>Encyclopedia Brunoniana</i> is an effective transformation of a text into HTML, but a poor case-study on the enrichment of a document with hypertext. This fault is particularly jarring since hypertext was designed not for creating applications (as is now the trend), but for organizing and presenting vast amounts of organized documents. The only navigation mechanism provided by the current online edition is index on its home page of over six hundred hyperlinks. Index-based navigation is suitable for printed books because books afford the user the ability to browse with the mere flip of a page. When the ability to browse is removed, index-based navigation remains suitable only for users who have a precise quarry in mind.</p>
+  
+  <p>For insight on what an effective rendition of the encyclopedic form in hypertext entailed, we looked to none other than Wikipedia. The English edition of the site effectively presents over five-million articles; a volume for which a print rendition would be unfeasible! While the number of articles in <i>Encyclopedia Brunoniana</i> doesn't prohibit offering a <a href=".">definitive index of articles</a>, it's not so few that more expressive navigation mechanisms aren't useful. <i>Liber Brunoniana</i> borrows Wikipedia's classification of articles into categories (including the ability to classify categories themselves into categories) and inter-document navigation via wikilinks. For technical reasons, we haven't yet implemented an integrated document search, but I suspect the necessity of search is diminished for collections of under a thousand documents. Finally, we borrowed Wikipedia's practice of thematic meta-pages, namely that of <a href="https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Time">year pages</a>, which summarize events of a given year.</p>
+  
+  <section><h3>Classification</h3>
+  <p>We initially tried to apply the clustering techniques detailed in Brandon Rose's<i><a href="http://brandonrose.org/clustering">Document Clustering in Python</a></i>, but the results were, from a glance, underwhelming. That such an evaluation could be made at a glance owed itself to the uniform structures present in Martha Mitchell's choice of article titles. For many categories, we were able to generate simple rules that matched precisely the set of articles we desired. Articles about <a href="../Topics/People">people</a>, for example, have titles following the structure "Last, First M.I". Likewise, articles about Brown's <a href="../Topics/Gates">gates</a> contained the string "Gate" in their title.</p>
+  
+  <p>The number of categories that could be derrived with total accuracy from title alone was very small, but the certainty and success of the process enabled us to iteratively bootstrap structured semantics onto the text. Articles about buildings, for example, invariably contain the phrase "built in", but so did other types of articles: the article about a building's namesake often references the structure that memorialized them, and non-building articles such as gates contain the phrase "built in", too. To create a category containing all articles about buildings, we searched the set of articles which had not already been placed into the "people" or "gates" categories for the text "built in".</p>
+  
+  <p>Similarly, to construct the sub-category <a href="../Topics/People/Professors">Professors</a>, we filtered for the phrase "professor of" within articles that had already been categorized as people.</p>
+  
+  <p>By iteratively structuring the document collection, we increased the precision of classificaton, without increasing the complexity of performing it. No surefire regular expression identifies <a href="../Topics/Publications">Publications</a> with few false positives, but we were able to continue to use very general search expressions by reducing the search space with prior classifications</p>
+  </section>
+  
+  <section><h3>Entity Linking</h3>
+  <p>todo</p>
+  </section>
+  
+  <section><h3>Date Fact Extraction</h3>
+  <p>todo</p>
+  </section>
+</section>
+
+<section><h2>Construction</h2>
+  
+  <section><h3>Stiki: The Static Wiki</h3>
+  <p>todo</p>
+  </section>
+
+  <section><h3>Bash as a Template Engine</h3>
+  <p>todo</p>
+  </section>
+
+  <section><h3>Build Process</h3></section>
+  <p>todo</p>
+  </section>
+</section>
+
+<section><h2>Presentation</h2>
+todo
+</section>
