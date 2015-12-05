@@ -111,9 +111,14 @@ a:visited {color:darkcyan}
   -webkit-column-span: all;
 }
 #subcategories > ul:empty:after {
-  content: "There are no sub-categories.";
+  content: "There are no subcategories.";
 }
-
+#pages > ul:empty {
+  -webkit-column-span: all;
+}
+#pages > ul:empty:after {
+  content: "There are no pages.";
+}
 
 
 cite {font-size: smaller;}
