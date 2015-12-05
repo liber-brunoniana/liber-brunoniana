@@ -114,6 +114,8 @@ a:visited {color:darkcyan}
   content: "There are no sub-categories.";
 }
 
+
+
 cite {font-size: smaller;}
 cite::before {
   color: grey;
@@ -201,8 +203,9 @@ li { margin-bottom: 0.2em;}
     
     padding: 1em;
     min-height: 100vh;
-    
+    box-sizing: border-box;
     margin-top: 25vh;
+    
     line-height: 2;
     background-color:white;
     position:relative;
