@@ -9,7 +9,7 @@
   
   <p>For insight on what an effective rendition of the encyclopedic form in hypertext entailed, we looked to none other than Wikipedia. The English edition of the site effectively presents over five-million articles; a volume for which a print rendition would be unfeasible! While the number of articles in <i>Encyclopedia Brunoniana</i> doesn't prohibit offering a <a href=".">definitive index of articles</a>, it's not so few that more expressive navigation mechanisms aren't useful. <i>Liber Brunoniana</i> borrows Wikipedia's classification of articles into categories (including the ability to classify categories themselves into categories) and inter-document navigation via wikilinks. For technical reasons, we haven't yet implemented an integrated document search, but I suspect the necessity of search is diminished for collections of under a thousand documents. Finally, we borrowed Wikipedia's practice of thematic meta-pages, namely that of <a href="https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Time">year pages</a>, which summarize events of a given year.</p>
   
-  <section><h3>Classification</h3>
+  <section><h3>Iterative Classification</h3>
   <p>We initially tried to apply the clustering techniques detailed in Brandon Rose's<i><a href="http://brandonrose.org/clustering">Document Clustering in Python</a></i>, but the results were, from a glance, underwhelming. That such an evaluation could be made at a glance owed itself to the uniform structures present in Martha Mitchell's choice of article titles. For many categories, we were able to generate simple rules that matched precisely the set of articles we desired. Articles about <a href="../Topics/People">people</a>, for example, have titles following the structure "Last, First M.I". Likewise, articles about Brown's <a href="../Topics/Gates">gates</a> contained the string "Gate" in their title.</p>
   
   <p>The number of categories that could be derrived with total accuracy from title alone was very small, but the certainty and success of the process enabled us to iteratively bootstrap structured semantics onto the text. Articles about buildings, for example, invariably contain the phrase "built in", but so did other types of articles: the article about a building's namesake often references the structure that memorialized them, and non-building articles such as gates contain the phrase "built in", too. To create a category containing all articles about buildings, we searched the set of articles which had not already been placed into the "people" or "gates" categories for the text "built in".</p>
@@ -20,7 +20,31 @@
   </section>
   
   <section><h3>Entity Linking</h3>
-  <p>todo</p>
+  <p>To create the same sort of experience of exploration that makes sites like Wikipedia or TVTropes addicting to navigate, we attempted to automatically identify keywords in articles that corresponded to other articles replace them with hyperlinks. The same structured properties of Martha Mitchell's titles that enabled classification simplified entity linking, too.</p>
+  
+  <p>To identify keywords, we simply performed a case-sensitive search of each article's text for the names of other articles. This naïve technique performed surprisingly well. Applied directly to a collection like Wikipedia, such a process would flood articles with irrelevant hyperlinks (which is to say nothing of the problem of disambiguation), but it proves suitable for collections of documents with narrow breadth and uncommon names. The only problematic article in Encyclopedia Brunoniana was <a href="./Well.html">Well</a>.</p>
+  
+  <p>While a regular expression powered search-and-replaced powered the initial attempt at entity linking, a common, confounding case rendered it useless. Brown&mdash;and by extension, Encyclopedia Brunoniana&mdash;has a history rich with countless notable individuals, whom it honors by giving buildings their name. Thus to "<a href="./Hay, John.html">John Hay</a>", add the "<a href="./John Hay Library">John Hay Library</a>", and so on. With regular expressions alone, it is impossible to express that a hyperlink should never be nested inside another hyperlink; to express this, we enter the realm of context-free languages. Consistently handling these cases threatened to explode the complexity of the task into parsing HTML. Greg Hendershott's <a href="https://github.com/greghendershott/frog/blob/master/frog/xexpr-map.rkt">xexpr-map</a> procedure reduced the challenge of expressing a context-aware tree transformer to a few lines of Racket:</p>
+<pre>
+<code>
+(define (linkify-xexpr str href)
+  (lambda (xexpr parents)
+    (match* (xexpr parents)
+      ;; Match only text not under an anchor tag
+      [((? string? s) (not (list-no-order `(a . ,_) _ ...)))
+       (list* (add-between 
+                (regexp-split (pregexp (string-append "\\b" str "\\b")) s) 
+                `(a ([href ,href]) ,str)))]
+      [(x _) `(,x)])
+</code>
+</pre>
+  <p>For all articles, we perform linkification with an identity mapping between article name and keyword. For articles about people (which we can identify with absolute certainty), additionally linkify with various common arrangements of name components.</p>
+  
+  <p>Excluding links introduced by categories and year pages, this process introduced over 3,000 hyperlinks between documents. Visualized, this process reflects the transformation of a disparate cloud of about six-hundred-eighty articles,</p>
+  <img src="https://i.imgur.com/he3y37L.png" width="100%" height="auto"></img>
+  <p>...into a complex web that leaves few documents orphaned (if you include hyperlinks introduced by date pages, there are no orphaned pages):</p>
+  <img src="https://i.imgur.com/7NE3Ao1.png" width="100%" height="auto"></img>
+  <p>That not sufficient evidence to say this is a functional improvement, but by exploring Liber Brunoniana you can be the judge of that.</p>
   </section>
   
   <section><h3>Date Fact Extraction</h3>
