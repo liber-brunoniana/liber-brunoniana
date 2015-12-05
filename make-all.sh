@@ -17,7 +17,7 @@ done
 echo "Copy Symlinks"
 find . -type l -print0 | while read -d $'' source; do
   target="../build/$source"
-  cp "$source" "$target"
+  cp -d "$source" "$target"
   echo "$source"
 done
 
