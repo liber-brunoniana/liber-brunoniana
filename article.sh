@@ -1,6 +1,13 @@
 #!/bin/sh
 . ../util.sh
 NAME=`basename "$1" .html`
+if [ "$NAME" == "index" ] ; then
+  NAME=$(dirname $1)
+  if [ "$NAME" == "." ] ; then 
+    NAME="$SITE_NAME"
+  fi
+fi
+  
 ../page.sh "$NAME" << _EOF_
 <article id="article">
   <header id="page-header">

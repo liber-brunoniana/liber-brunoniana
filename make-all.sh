@@ -18,7 +18,10 @@ echo "Compiling Articles"
 find . -type f -name "*.html" -print0 | while read -d $'' source ; do
   echo "$source"
   target="../build/$source"
-  if [ ! -e "$target" ] || [ "$target" -ot "$source" ]; then
+  if [ ! -e "$target" ] || [ $(basename "$source") == "index.html" ] || [ "$target" -ot "$source" ]; then
+    if [ -e "$target" ] ; then
+      rm "$target"
+    fi
     mkdir -p `dirname "../build/$target"`
     ../article.sh "$source" > "$target"
   fi
