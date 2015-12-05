@@ -4,7 +4,11 @@ function categories() {
     | xargs -0 dirname -z           \
     | while read -d $'' category
     do
-      href=`realpath "$category" --relative-to "$1"`
+      if [ -f "$1" ] ; then
+        href=`realpath "$category" --relative-to "$(dirname "$1")"`
+      else
+        href=`realpath "$category" --relative-to "$1"`
+      fi
       name=`basename "$category"` 
       if [ "$name" == "." ] ; then 
         name="$SITE_NAME"
