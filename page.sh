@@ -2,7 +2,7 @@
 if [ -z "${BASE+x}" ] ; then
   BASE=$(readlink -f .. | xargs printf 'file://%s/build/');
 fi
-cat << _EOF_
+cat <<- _EOF_
 <!DOCTYPE html>
 <html lang="en">
   <head>

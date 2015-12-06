@@ -8,7 +8,7 @@ if [ "$NAME" == "index" ] ; then
   fi
 fi
   
-../page.sh "$NAME" << _EOF_
+../page.sh "$NAME" <<- _EOF_
 <article id="article">
   <header id="page-header">
     <h1>`echo "$NAME"`</h1>
