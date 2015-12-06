@@ -95,6 +95,10 @@ a:visited {color:darkcyan}
   margin-bottom: 0;
 }
 
+#content {
+  width: 100em;
+}
+
 
 
 /* Styling Specific to Category Pages */
@@ -227,20 +231,12 @@ li { margin-bottom: 0.2em;}
     z-index: 1;
   }
   
-
-
-  #article > *,
-  #category > * {
-    #margin: 1em;
-  }
-  
   /* Styling Specific to Article Pages */
   #article > #content {
     flex: 1;
     max-width: 40em;
     margin-left: auto;
     margin-right: auto;
-    padding: 1em;
   }
   
   #page-nav {
