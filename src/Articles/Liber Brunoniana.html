@@ -1,3 +1,4 @@
+<style>code.block{display:block;font-family:monospace;}</style>
 <p>Since its publication in 1993, Martha Mitchell's 629 page <i>Encyclopedia Brunoniana</i> has served as the definitive reference work of Brown University's history. Its 668 articles document the University's <a href="../Topics/Buildings">buildings</a>, <a href="../Topics/Departments">departments</a>, <a href="../Topics/People">people</a>, and <a href="../Topics/Publications">publications</a>. The <i>Liber Brunoniana</i> project utilizes natural language processing techniques to transform Mitchell's text into hypertext, automatically inferring over 5,000 hyperlinks between articles, deliminating content into categories, and constructing pages detailing the events of <a href="./Topics/Years">each year</a> mentioned in the encyclopedia. This article details the techniques used to construct <i>Liber Brunoniana</i>, a book freed from the limitations of paper.</p>
 
 <section><h2>Aquisition</h2> 
@@ -45,7 +46,24 @@
 <section><h2>Construction</h2>
   
   <section><h3>Stiki: The Static Wiki</h3>
-  <p>todo</p>
+  <p>Static site generators are enjoying a rennaisance in popularity for their ease of reasoning about, and their properties of consistent performance and resource consumption. Much of this rennaisance has been in the area of static blogs, and in trying replicate the functionality of a blog some prepackaged generated are quite complex. We believed that the technique of static site generation would be an even more natural fit to the domain of online wikis. Moreover, we believed that such a generator could match the functionality of a dynamic wiki while operating on simple principals and mechanics. Although 'static' may seem antithetical to the collaborative nature of a Wiki, it actually delegates those responsibilities to more qualified agents. Liber Brunoniana delegates the responsibility of collaboration and change-tracking to Git, and webhook-triggered build scripts render changes within seconds.</p>
+
+  <p>Stiki, the static wiki, is a simple static site generator for wiki-like sites that derives complex functionality from the consistent application of two principals:
+  <ul>
+    <li>Files are pages.</li>
+    <li>Folders are categories.</li>
+  </ul>
+  The simplicity of these rules belies their flexibility. The 1-1 mapping between the filesystem and the generated site imbues Stiki-powered sites with all the functionality and flexibility of the filesystem, a proven document organization mechanism. Just as symbolic links, for example, enable a filesystem entity to exist in more than one place, it allows articles and categories to exist in multiple categories.</p>
+
+  <p>Of any document management system, filesystems have the best tooling available. Stiki leverages this tooling to express relationships between documents extremely tersely. To list all of the categories an article or category belongs to:
+  <code class="block">find -L . -samefile "$1" -print0 | dirname -z</code>
+  To list all sub-pages of a category:
+  <code class="block">find "$1" -mindepth 1 -maxdepth 1 -xtype f</code>
+  To list all sub-categories of a category:
+  <code class="block">find "$1" -mindepth 1 -maxdepth 1 -xtype d</code>
+  In these three commands, we've expressed the necessary relationshps to create a encyclopedic-like site.</p>
+
+  <p>Stiki is less a piece of software than it is a set of principals. The initial, slightly unwieldy, Racket-powered generator created for this project occupies the <a href="https://github.com/jswrenn/stiki">Stiki repo</a>, but the scripts in the <a href="https://github.com/liber-brunoniana/liber-brunoniana">Liber Brunoniana repo</a> reflect the '1.0' rendition of the Stiki principals.</p>
   </section>
 
   <section><h3>Bash as a Template Engine</h3>
