@@ -84,7 +84,7 @@
 <section><h2>Presentation</h2>
 <p>This project, as a whole, grew out of a conviction that the presentation of history need not itself be historic. The navigational transformations we applied to the text are only part of the presentation experience; the aesthetics of the presentation is equally at important. Designing an appropriate interface for presenting Encyclopedia Brunoniana was an act of reconciling history with modernity.</p>
 
-<section><h3>Youthful Flexibility/h3>
+<section><h3>Youthful Flexibility</h3>
   <p>Armed with the improvements of CSS3, the most critical aspects of which enjoy broad browser support, designing modern interfaces for the web is no longer a challenge. A subtle way to project an impression of modernity is to ensure that your interface feels tailor-made to the user's device. Sites that use mobile-only or desktop-only designs are doomed to neglect some set of users. Sites that dynamically present users two distinct interfaces depending on their device can be the worst of both worlds, shattering any expectation the user had of a consistent application interface.</p>
   
   <p>Through flexbox alone, Liber Brunoniana's interface is adaptable enough that users at all resolutions see virtually the same interface. When considering the role of device-dependent layout, we considered the order in which elements demand the user's attention. A consistent design isn't one that enforces identical layouts across canvas sizes, it's one that enforces a consistent heirarchy of visual importance. On wide displays, Liber Brunoniana reduces white-space on the page with a sticky page navigation side bar to the left of the article.</p> 
@@ -97,12 +97,40 @@
 </section>
 
 <section><h3>Typography of Authority</h3>
-  <p>type-scale.org, adapt print typographic practices, baskerville</p>
-
-
-<section><h3>New Tricks for Old Dogs</h3>
-  <p>creating effective print stylesheets</p>
-</section>
-
+  <p>By virtue of the medium, content published on the web suffers from an authority problem&mdash;the luminescent, evanescent frame of a web browser simply lacks the certainty of existence that eminates from a printed book; the dubious content of much of what's publish on the web doesn't help either. The online edition of Encyclopedia Brunoniana, sharing its contents with the printed edition and having equal functional authority, failed to project an equal <i>impression</i> of authority. Liber Brunoniana projects authority to the user by borrowing the lessons of print typography.</p>
+  <section><h4>Types of Trust</h4>
+    <img src="http://klepas.org/openbaskerville/specimens/Updike-Printing-Types_1766-FryBaskerville-scan.png" width="100%" height="auto"></img>
+    <p>In a recent A/B <a href="http://opinionator.blogs.nytimes.com/2012/08/08/hear-all-ye-people-hearken-o-earth/">experiment</a> on readers, New York Times opinion writer Errol Morris tested (though not to academic standards) whether the typeface a statement was presented in affected how likely readers were to believe it. Such an effect exists in folk knowlege; Comic Sans is notoriously unauthoritative, and Helvetica is prized for it's neutral stateliness. As Morris's follow up article detailed, there is academic evidence for such an effect. The million-dollar question, however, is whether a typeface can go beyond neutrality and exert <i>authority</i>. Morris writes,</p>
+    <blockquote>
+      <p>The <em>conscious</em> awareness of Comic Sans promotes — at least among some people — contempt and summary dismissal. But is there a typeface that promotes, engenders a <em>belief</em> that a sentence is true? Or at least nudges us in that direction? And indeed there is.</p>
+      <p>It is Baskervile</p>
+    </blockquote>
+    <p>Following an evidenced-based approach, Liber Brunoniana is typeset in <a href="http://www.impallari.com/projects/overview/libre-baskerville">Libre Baskerville</a>. This improved on an earlier iteration of the site typeset in the <a href="http://iginomarini.com/fell/">Fell Types</a> in aesthetics, readability, and performance.</p>
+    </blockquote>
+  </section>
+  <section><h4>Watch the Width</h4>
+    <p>The rule of thumb to limit line lengths to 45-75 characters is perhaps the strongest enrichment that can be made to web typography, and with very little effort. We used <a href="https://css-tricks.com/bookmarklet-colorize-text-45-75-characters-line-length-testing/">Chris Coyier's bookmarklet</a> to settle on a <code>max-width</code> of 50em for article content.</p>
+  </section>
+  <section><h4>Weigh Importance</h4>
+    <p>The pleasent typography of Liber Brunoniana&mdash;not developed by designers&mdash; would not have been possible without tools like <a href="http://type-scale.org/">Type-Scale.org</a>, a web application choosing visually appealing 'scales' of text sizes for headings. Liber Brunoniana uses an augmented fourth scale for wide-display clients, and a perfect fourth scale for narrow display clients.</p>
+  </section>
+  <section><h4>Ditch the Columns</h4>
+    <p>Columnar layouts are one of the most compelling new features of CSS, but their use on Liber Brunoniana is limited to the print media version of the site, and category listings.</p>
+    <p>In print, columns are a panacea, at once improving both legibility and information density. What works well in one medium, however, does not necessarily translate well to others. The choice to use columns effects a fundamental change in how the eye traverses the content: rather than strictly up-to-down, a print columnar design limits column height to the field of view of the eye so that the reader ‘scrolls’ their vision horizontally. It’s an inversion of the consumption model we’re used to on the web.</p>
+    <p>The key here is limited vertical field of view. The web favors vertical scrolling and websites have an effectively limitless vertical dimension; when that content spills out of the viewport, a scrollbar is simply added. Applying columns to an vertically-limitless design arbitrarily bisects the content at the midway point.</p>
+  </section>
+  <section><h4>Embrace Print</h4>
+    <p>More specifically, embrace print stylesheets. Encyclopedia Brunoniana feels authoritative in the print form, and Liber Brunoniana's web presentation (with some effort) feels authoritative, too. While digitizing a book is a herculean effort, converting a webpage is a as simple as <kbd>Ctrl+P</kbd>; your users <i>will</i> do it. Liber Brunoniana retains authority in its printed form by using a print-targeting media query.</p>
+    <p>As a general check-list:
+    <ul><li>Remove navigation elements</li>
+        <li>Layout remaining elements appropriately</li>
+        <li>Choose print-appropriate font sizes</li>
+        <li>Limit line length</li>
+        <li>Consider using columns, but don't depend on it. Only firefox has support for columns in print.</li>
+    </ul>
+    </p>
+    <p>Applying these considerations, a modern browser can produce a print of a Liber Brunoniana approaching the quality of one typeset with LaTeX.</p>
+    <img http://i.imgur.com/cjTmvko.png" width="100%" height="auto"></img>
+  </section>
 </section>
 </section>
