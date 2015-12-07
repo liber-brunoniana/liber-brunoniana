@@ -170,6 +170,18 @@ blockquote {
   
 }
 
+figure {
+  border-width: 3px 0;
+  border-style: solid;
+  border-color: black;
+  padding: 0.5em 0;
+}
+
+figcaption {
+  font-size: small;
+  padding: 0.5em;
+}
+
 li { margin-bottom: 0.2em;}
 
 /* On screens... */
@@ -247,7 +259,7 @@ li { margin-bottom: 0.2em;}
 }
 
 #categories ul { list-style: disc inside none; }
-#article #content ul { list-style: disc outside none; }
+#article #content ul { list-style: disc inside none; padding-left: 1em;}
 
 #categories h2,
 #subcategories h2 {
