@@ -187,7 +187,7 @@ i,em { font-style: italic;}
 code{font-family:monospace;} 
 code.block{display:block;padding-left:1em;}
 
-li { margin-bottom: 0.2em;}
+li { margin-bottom: 0.2em; margin-left: 1em;}
 
 /* On screens... */
 @media not print {
@@ -257,6 +257,7 @@ li { margin-bottom: 0.2em;}
   }
   
   #page-nav {
+    margin-bottom:1em;
     margin-right: 2em;
     position: sticky;
     top: 0;
