@@ -30,8 +30,8 @@
           else
             href=$(realpath "$category" --relative-to "$1")
           fi
-          echo "<li><a href=\"$href\">$name</a></li>"
-        done
+          printf "<a href=\"%s\">%s</a>\0" "$href" "$name"
+        done | li
    `</ul>
     </section>
     <section id="pages">
@@ -47,8 +47,8 @@
             else
               href=$(realpath "$article" --relative-to "$1")
             fi
-            echo "<li><a href=\"$href\">$name</a></li>" 
-          done
+            printf "<a href=\"%s\">%s</a>\0" "$href" "$name"
+          done | li
      `</ul>
     </section>
   </section>
