@@ -1,31 +1,44 @@
-#!/bin/sh
+#!/usr/bin/env bash
 export SRC="src"
 export SITE_NAME="Liber Brunoniana"
 rm -rf "build"
 mkdir -p "build"
 pushd "$SRC" >/dev/null
-echo "Compiling Categories"
 
-find . -type d -print0 | while read -d $'' source; do
-  target="../build/$source"
-  mkdir -p "$target"
-  target+="/index.html"
-  ../category.sh "$source" > "$target"
-  echo "$source"
-done
+find . -type d -print0 \
+  | while read -d $'' source
+  do
+   (target="../build/$source"
+    mkdir -p "$target"
+    ../templates/category.sh "$source" > "$target/index.html") &
+  done
 
-echo "Compiling Articles"
-find . -type f -name "*.html" -print0 | while read -d $'' source ; do
-  echo "$source"
-  target="../build/$source"
-  if [ ! -e "$target" ] || [ $(basename "$source") == "index.html" ] || [ "$target" -ot "$source" ]; then
-    if [ -e "$target" ] ; then
-      rm "$target"
-    fi
-    mkdir -p `dirname "../build/$target"`
-    ../article.sh "$source" > "$target"
-  fi
-done
+find . -type f -name "*.html" -print0 \
+  | while read -d $'' source
+    do
+     (target="../build/$source"
+      if [ ! -e "$target" ] \
+      || [ $(basename "$source") == "index.html" ] \
+      || [ "$target" -ot "$source" ]; then
+        [ -e "$target" ] && rm "$target"
+        mkdir -p `dirname "../build/$target"`
+        ../templates/article.sh "$source" > "$target"
+      fi) &
+    done && wait
+    
+find . -type f -name "*.png" -print0 \
+  | while read -d $'' source
+    do
+     (target="../build/$source"
+      if [ ! -e "$target" ] \
+      || [ $(basename "$source") == "index.html" ] \
+      || [ "$target" -ot "$source" ]; then
+        [ -e "$target" ] && rm "$target"
+        mkdir -p `dirname "../build/$target"`
+        ../templates/article.sh "$source" > "$target"
+      fi) &
+    done && wait
+
     
 popd >/dev/null
 cp ./style.css ./build/style.css

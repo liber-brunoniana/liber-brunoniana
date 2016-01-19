@@ -1,6 +1,6 @@
-#!/bin/sh
-. ../util.sh
-../page.sh << _EOF_
+#!/usr/bin/env bash
+. ../templates/util.sh
+../templates/page.sh << _EOF_
 <article id="category">
   <header id="page-header">
     <h1>`

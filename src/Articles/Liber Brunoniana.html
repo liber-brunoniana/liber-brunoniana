@@ -1,160 +1,159 @@
 <p>Since its publication in 1993, Martha Mitchell's 629 page <i>Encyclopedia Brunoniana</i> has served as the definitive reference work of Brown University's history. Its 668 articles document the University's <a href="../Topics/Buildings">buildings</a>, <a href="../Topics/Departments">departments</a>, <a href="../Topics/People">people</a>, and <a href="../Topics/Publications">publications</a>. The <i>Liber Brunoniana</i> project utilizes natural language processing techniques to transform Mitchell's text into hypertext, automatically inferring over 5,000 hyperlinks between articles, delimiting content into categories, and constructing pages detailing the events of <a href="./Topics/Years">each year</a> mentioned in the encyclopedia. This article details the techniques used to construct <i>Liber Brunoniana</i>, a book freed from the limitations of paper.</p>
-
-<section><h2 id="aquisition">Aquisition</h2> 
-  <p>The possibility of creating <i>Liber Brunoniana</i> owes itself to Brown's longstanding distribution of a basic <a href="http://www.brown.edu/Administration/News_Bureau/Databases/Encyclopedia/">online edition of <i>Encyclopedia Brunoniana</i></a>. We used a <a href="https://github.com/liber-brunoniana/scraper">simple python script</a> to scrape the article text of this online edition. The faithful rendition of the text into mostly semantic HTML (blockquotes are enclosed in the appropriate tag, for example) eased the subsequent steps of transforming the text using rule-based natural language processing, and transforming the markup for our presentation.</p> 
+<figure>
+  <img src="http://i.imgur.com/qXH72fa.png" width="100%" height="auto">
+  <figcaption>A screenshot of <i><a href="http://www.brown.edu/Administration/News_Bureau/Databases/Encyclopedia/search.php?serial=C0070">Carberry, Josiah S.</a></i> on the official <a href="http://www.brown.edu/Administration/News_Bureau/Databases/Encyclopedia/">online edition</a> of <i>Encyclopedia Brunoniana</i>. Liber Brunoniana <a href="http://liber-brunoniana.github.io/Articles/Carberry,%20Josiah%20S..html">improves upon this</a>.</figcaption>
+</figure>
+<section><h2 id="aquisition">Aquisition</h2>
+<p>The possibility of creating <i>Liber Brunoniana</i> owes itself to Brown's longstanding distribution of a basic <a href="//www.brown.edu/Administration/News_Bureau/Databases/Encyclopedia/">online edition of <i>Encyclopedia Brunoniana</i></a>. We used a <a href="https://github.com/liber-brunoniana/scraper">simple python script</a> to scrape the article text of this online edition. The faithful rendition of the text into mostly semantic HTML (blockquotes are enclosed in the appropriate tag, for example) eased the subsequent steps of transforming the text using rule-based natural language processing, and transforming the markup for our presentation.</p>
 </section>
 
 <section><h2 id="transformation">Transformation</h2>
   <p>Notwithstanding presentation, the current online edition of <i>Encyclopedia Brunoniana</i> is an effective transformation of a text into HTML, but a poor case-study on the enrichment of a document with hypertext. This fault is particularly jarring since hypertext was designed not for creating applications (as is now the trend), but for organizing and presenting vast amounts of organized documents. The only navigation mechanism provided by the current online edition is the index on its home page of over six hundred hyperlinks. Index-based navigation is suitable for printed books because books afford the user the ability to browse with the mere flip of a page. When the ability to browse is removed, index-based navigation remains suitable only for users who have a precise quarry in mind.</p>
-  
+
   <p>For insight on what an effective rendition of the encyclopedic form in hypertext entailed, we looked to none other than Wikipedia. The English edition of the site effectively presents over five million articles, a volume for which a print rendition would be unfeasible! While the smaller number of articles in <i>Encyclopedia Brunoniana</i> doesn't prohibit offering a <a href=".">definitive index of articles</a>, it's enough that more expressive navigation mechanisms are useful. <i>Liber Brunoniana</i> borrows Wikipedia's classification of articles into categories (including the ability to classify categories themselves into categories) and inter-document navigation via <a href="https://en.wikipedia.org/wiki/Hyperlink#Hyperlinks_in_wikis">wikilinks</a>. For technical reasons, we haven't yet implemented an integrated document search, but we suspect the necessity of search is diminished for collections of under a thousand documents. Finally, we borrowed Wikipedia's practice of thematic meta-pages, namely that of <a href="https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Time">year pages</a>, which summarize events of a given year.</p>
-  
+
   <section><h3 id="classify">Iterative Classification</h3>
-  <p>We initially tried to apply the clustering techniques detailed in Brandon Rose's<i> <a href="http://brandonrose.org/clustering">Document Clustering in Python</a></i>, but the results were, from a glance, underwhelming. That we could make this sort of at-a-glance evaluation owed itself to the uniform structures present in Martha Mitchell's choice of article titles. For many categories, we were able to generate simple rules that matched precisely the set of articles we desired. Articles about <a href="../Topics/People">people</a>, for example, have titles following the structure <samp>"Last, First M.I"</samp>. Likewise, articles about Brown's <a href="../Topics/Gates">gates</a> contained the string "Gate" in their title.</p>
-  
-  <p>The number of categories that could be derived with total accuracy from title alone was very small, but the certainty and success of the process enabled us to iteratively bootstrap structured semantics onto the text. Articles about <a href="../Topics/Buildings">buildings</a>, for example, invariably contain the phrase "built in", but so did other types of articles: the article about a building's namesake often refers to the structure that memorialized that person, and non-building articles such as gates contain the phrase "built in", too. To create a category containing all articles about buildings, we searched the set of articles which had not already been placed into the "people" or "gates" categories for the text "built in".</p>
-  
-  <p>Similarly, to construct the sub-category <a href="../Topics/People/Professors">Professors</a>, we filtered for the phrase "professor of" within articles that had already been categorized as people.</p>
-  
-  <p>By iteratively structuring the document collection, we increased the precision of classification, without increasing the complexity of performing it. No surefire regular expression identifies <a href="../Topics/Publications">Publications</a> with few false positives, but we were able to continue to use very general search expressions by reducing the search space with prior classifications.</p>
+    <p>We initially tried to apply the clustering techniques detailed in Brandon Rose's<i> <a href="//brandonrose.org/clustering">Document Clustering in Python</a></i>, but the results were, from a glance, underwhelming. That we could make this sort of at-a-glance evaluation owed itself to the uniform structures present in Martha Mitchell's choice of article titles. For many categories, we were able to generate simple rules that matched precisely the set of articles we desired. Articles about <a href="../Topics/People">people</a>, for example, have titles following the structure <samp>"Last, First M.I"</samp>. Likewise, articles about Brown's <a href="../Topics/Gates">gates</a> contained the string "Gate" in their title.</p>
+
+    <p>The number of categories that could be derived with total accuracy from title alone was very small, but the certainty and success of the process enabled us to iteratively bootstrap structured semantics onto the text. Articles about <a href="../Topics/Buildings">buildings</a>, for example, invariably contain the phrase "built in", but so did other types of articles: the article about a building's namesake often refers to the structure that memorialized that person, and non-building articles such as gates contain the phrase "built in", too. To create a category containing all articles about buildings, we searched the set of articles which had not already been placed into the "people" or "gates" categories for the text "built in".</p>
+
+    <p>Similarly, to construct the sub-category <a href="../Topics/People/Professors">Professors</a>, we filtered for the phrase "professor of" within articles that had already been categorized as people.</p>
+
+    <p>By iteratively structuring the document collection, we increased the precision of classification, without increasing the complexity of performing it. No surefire regular expression identifies <a href="../Topics/Publications">Publications</a> with few false positives, but we were able to continue to use very general search expressions by reducing the search space with prior classifications.</p>
   </section>
-  
+
   <section><h3 id="linkify">Entity Linking</h3>
-  <p>To create the same sort of experience of exploration that makes sites like Wikipedia and TVTropes addicting to navigate, we attempted to automatically identify keywords in articles that corresponded to other articles, and replace them with hyperlinks. The same structured properties of Martha Mitchell's titles that enabled classification simplified entity linking, too.</p>
-  
-  <p>To identify keywords, we simply performed a case-sensitive search of each article's text for the names of other articles. This naïve technique performed surprisingly well. Applied directly to a collection like Wikipedia, such a process would flood articles with irrelevant hyperlinks (which is to say nothing of the problem of disambiguation), but it proves suitable for collections of documents with narrow breadth and uncommon names. The only problematic article in <i>Encyclopedia Brunoniana</i> was <a href="./Well.html">Well</a>.</p>
-  
-  <p>While a regular expression search-and-replace powered the initial attempt at entity linking, a common, confounding case rendered it useless. Brown&mdash;and by extension, <i>Encyclopedia Brunoniana</i>&mdash;tends to honor notable individuals in its rich history by naming buildings after them. Thus to "<a href="./Hay, John.html">John Hay</a>", add the "<a href="./John Hay Library">John Hay Library</a>", and so on. With regular expressions alone, it is impossible to express that a hyperlink should never be nested inside another hyperlink; to express this, we enter the realm of context-free languages. Consistently handling these cases threatened to explode the complexity of the task into parsing HTML. Greg Hendershott's <a href="https://github.com/greghendershott/frog/blob/master/frog/xexpr-map.rkt">xexpr-map</a> procedure reduced the challenge of expressing a context-aware tree transformer to a few lines of Racket:</p>
-  <script src="https://gist.github.com/jswrenn/4ec603f54271baea9c3f.js"></script>
-  <p>For all articles, we perform linkification with an identity mapping between article name and keyword. For articles about people (which we can identify with absolute certainty), we additionally linkify with various common arrangements of name components.</p>
-  
-  <p>Excluding links introduced by categories and year pages, this process introduced over 3,000 hyperlinks between documents. Visualized, this process reflects the transformation of a disparate cloud of about six-hundred-eighty articles,</p>
-  <img src="https://i.imgur.com/he3y37L.png" width="100%" height="auto"></img>
-  <p>...into a complex web that leaves few documents orphaned (if you include hyperlinks introduced by date pages, there are no orphaned pages):</p>
-  <img src="https://i.imgur.com/7NE3Ao1.png" width="100%" height="auto"></img>
-  <p>That not sufficient evidence to say this is a functional improvement, but by exploring <i>Liber Brunoniana</i> you can be the judge of that.</p>
+    <p>To create the same sort of experience of exploration that makes sites like Wikipedia and TVTropes addicting to navigate, we attempted to automatically identify keywords in articles that corresponded to other articles, and replace them with hyperlinks. The same structured properties of Martha Mitchell's titles that enabled classification simplified entity linking, too.</p>
+
+    <p>To identify keywords, we simply performed a case-sensitive search of each article's text for the names of other articles. This naïve technique performed surprisingly well. Applied directly to a collection like Wikipedia, such a process would flood articles with irrelevant hyperlinks (which is to say nothing of the problem of disambiguation), but it proves suitable for collections of documents with narrow breadth and uncommon names. The only problematic article in <i>Encyclopedia Brunoniana</i> was <a href="./Well.html">Well</a>.</p>
+
+    <p>While a regular expression search-and-replace powered the initial attempt at entity linking, a common, confounding case rendered it useless. Brown&mdash;and by extension, <i>Encyclopedia Brunoniana</i>&mdash;tends to honor notable individuals in its rich history by naming buildings after them. Thus to "<a href="./Hay, John.html">John Hay</a>", add the "<a href="./John Hay Library">John Hay Library</a>", and so on. With regular expressions alone, it is impossible to express that a hyperlink should never be nested inside another hyperlink; to express this, we enter the realm of context-free languages. Consistently handling these cases threatened to explode the complexity of the task into parsing HTML. Greg Hendershott's <a href="https://github.com/greghendershott/frog/blob/master/frog/xexpr-map.rkt">xexpr-map</a> procedure reduced the challenge of expressing a context-aware tree transformer to a few lines of Racket:</p>
+    
+    <script src="https://gist.github.com/jswrenn/4ec603f54271baea9c3f.js"></script>
+    
+    <p>For all articles, we perform linkification with an identity mapping between article name and keyword. For articles about people (which we can identify with absolute certainty), we additionally linkify with various common arrangements of name components.</p>
+
+    <p>Excluding links introduced by categories and year pages, this process introduced over 3,000 hyperlinks between documents. Visualized, this process reflects the transformation of a disparate cloud of about six-hundred-eighty articles,</p>
+    <img src="https://i.imgur.com/he3y37L.png" width="100%" height="auto"></img>
+    <p>...into a complex web that leaves few documents orphaned (if you include hyperlinks introduced by date pages, there are no orphaned pages):</p>
+    <img src="https://i.imgur.com/7NE3Ao1.png" width="100%" height="auto"></img>
+    <p>That not sufficient evidence to say this is a functional improvement, but by exploring <i>Liber Brunoniana</i> you can be the judge of that.</p>
   </section>
-  
+
   <section><h3 id="dateify">Date Fact Extraction</h3>
-  <p>Generating date pages (like the one for <a href="./1828.html">1828</a>) also benefited from being able to confidently identify pages about people. Generally speaking, the datification process consisted of tokenizing articles into lists of sentences, filtering out all sentences not containing four digit numbers, and adding the remainder to a date fact database from which date pages are created. Two challenges arose: Sentence tokenization, despite great support from Python's NLTK library, was confounded by the glut of esoteric abbreviations (mostly related to various degrees) whose periods were mistaken as sentence terminators. Fortunately, the tokenizer could easily be extended to recognize <a href="https://github.com/liber-brunoniana/dateify/blob/master/datefacts.py#L8">additional abbreviations</a>.</p>
-  
-  <p>The not-unexpected second challenge was disambiguating sentences that identified their subjects only by pronoun. While such sentences are perfectly acceptable with context, all date-facts are one-sentence fragments from articles. For articles about people, we know the likely subject of any pronoun, and replaced prounouns with the person's name. We avoided, importantly, replacing pronouns in sentences that already contained the subject's name. Such ambiguous sentences are fortunately much less common in articles not about people and we do not attempt to dereference any pronouns encountered there. While some complex disambiguation mechanism might be feasible, an ambiguous date fact is preferable to a date fact rendered unambiguously erroneous. All date facts are followed by a citation to the article they were extracted from so that readers can learn more if they wish.</p>
+    <p>Generating date pages (like the one for <a href="./1828.html">1828</a>) also benefited from being able to confidently identify pages about people. Generally speaking, the datification process consisted of tokenizing articles into lists of sentences, filtering out all sentences not containing four digit numbers, and adding the remainder to a date fact database from which date pages are created. Two challenges arose: Sentence tokenization, despite great support from Python's NLTK library, was confounded by the glut of esoteric abbreviations (mostly related to various degrees) whose periods were mistaken as sentence terminators. Fortunately, the tokenizer could easily be extended to recognize <a href="https://github.com/liber-brunoniana/dateify/blob/master/datefacts.py#L8">additional abbreviations</a>.</p>
+
+    <p>The not-unexpected second challenge was disambiguating sentences that identified their subjects only by pronoun. While such sentences are perfectly acceptable with context, all date-facts are one-sentence fragments from articles. For articles about people, we know the likely subject of any pronoun, and replaced prounouns with the person's name. We avoided, importantly, replacing pronouns in sentences that already contained the subject's name. Such ambiguous sentences are fortunately much less common in articles not about people and we do not attempt to dereference any pronouns encountered there. While some complex disambiguation mechanism might be feasible, an ambiguous date fact is preferable to a date fact rendered unambiguously erroneous. All date facts are followed by a citation to the article they were extracted from so that readers can learn more if they wish.</p>
   </section>
 </section>
 
 <section><h2 id="contruction">Construction</h2>
-  
+
   <section><h3 id="stiki">Stiki: The Static Wiki</h3>
-  <p>Static site generators are enjoying a renaissance in popularity for their ease of reasoning about, and their properties of consistent performance and resource consumption. Much of this renaissance has been in the area of static blogs, and in trying to replicate the functionality of a blog, some prepackaged generators are quite complex. We believed that the technique of static site generation would be an even more natural fit to the domain of online wikis. Moreover, we believed that such a generator could match the functionality of a dynamic wiki while operating on simple principals and mechanics. Although 'static' may seem antithetical to the collaborative nature of a wiki, it actually delegates those responsibilities to more qualified agents. <i>Liber Brunoniana</i> delegates the responsibility of collaboration and change-tracking to Git, and webhook-triggered build scripts render changes within seconds.</p>
+    <p>Static site generators are enjoying a renaissance in popularity for their ease of reasoning about, and their properties of consistent performance and resource consumption. Much of this renaissance has been in the area of static blogs, and in trying to replicate the functionality of a blog, some prepackaged generators are quite complex. We believed that the technique of static site generation would be an even more natural fit to the domain of online wikis. Moreover, we believed that such a generator could match the functionality of a dynamic wiki while operating on simple principals and mechanics. Although 'static' may seem antithetical to the collaborative nature of a wiki, it actually delegates those responsibilities to more qualified agents. <i>Liber Brunoniana</i> delegates the responsibility of collaboration and change-tracking to Git, and webhook-triggered build scripts render changes within seconds.</p>
 
-  <p>Stiki, the static wiki, is a simple static site generator for wiki-like sites that derives complex functionality from the consistent application of two principals:
-  <ul>
-    <li>Files are pages.</li>
-    <li>Folders are categories.</li>
-  </ul>
-  The simplicity of these rules belies their flexibility. The 1-1 mapping between the filesystem and the generated site imbues Stiki-powered sites with all the functionality and flexibility of the filesystem, a proven document organization mechanism. Just as symbolic links, for example, enable a filesystem entity to exist in more than one place, they allow articles and categories to exist in multiple categories.</p>
+    <p>Stiki, the static wiki, is a simple static site generator for wiki-like sites that derives complex functionality from the consistent application of two principals:
+    <ul><li>Files are pages.</li>
+        <li>Folders are categories.</li>
+    </ul>
+    The simplicity of these rules belies their flexibility. The 1-1 mapping between the filesystem and the generated site imbues Stiki-powered sites with all the functionality and flexibility of the filesystem, a proven document organization mechanism. Just as symbolic links, for example, enable a filesystem entity to exist in more than one place, they allow articles and categories to exist in multiple categories.</p>
 
-  <p>Of any document management system, filesystems have the best tooling available. Stiki leverages this tooling to express relationships between documents extremely tersely. To list all of the categories an article or category belongs to:
-  <code class="block">find -L . -samefile "$1" -print0 | dirname -z</code>
-  To list all sub-pages of a category:
-  <code class="block">find "$1" -mindepth 1 -maxdepth 1 -xtype f</code>
-  To list all sub-categories of a category:
-  <code class="block">find "$1" -mindepth 1 -maxdepth 1 -xtype d</code>
-  In these three commands, we've expressed the necessary relationshps to create a encyclopedia-like site.</p>
+    <p>Of any document management system, filesystems have the best tooling available. Stiki leverages this tooling to express relationships between documents extremely tersely. To list all of the categories an article or category belongs to:
+<code class="block">find -L . -samefile "$1" -print0 | dirname -z</code>
+To list all sub-pages of a category:
+<code class="block">find "$1" -mindepth 1 -maxdepth 1 -xtype f</code>
+To list all sub-categories of a category:
+<code class="block">find "$1" -mindepth 1 -maxdepth 1 -xtype d</code>
+In these three commands, we've expressed the necessary relationshps to create a encyclopedia-like site.</p>
 
-  <p>Stiki is less a piece of software than it is a set of principals. The initial, slightly unwieldy, Racket-powered generator created for this project occupies the <a href="https://github.com/jswrenn/stiki">Stiki repo</a>, but the scripts in the <a href="https://github.com/liber-brunoniana/liber-brunoniana">Liber Brunoniana repo</a> reflect the '1.0' rendition of the Stiki principals.</p>
+    <p>Stiki is less a piece of software than it is a set of principals. The initial, slightly unwieldy, Racket-powered generator created for this project occupies the <a href="https://github.com/jswrenn/stiki">Stiki repo</a>, but the scripts in the <a href="https://github.com/liber-brunoniana/liber-brunoniana">Liber Brunoniana repo</a> reflect the '1.0' rendition of the Stiki principals.</p>
   </section>
 
   <section><h3 id="bash">Bash as a Template Engine</h3>
     <p>Amidst the alphabet soup of web technologies, there is nothing less hip than a rusty shell script. In retrospect, however, it's not surprising that a shell created for an operating system where text is exchanged as universal interface between programs is exceptionally good at manipulating it. For HTML templating, Bash is an unlikely hero.</p>
 
     <p>Stiki combines multi-line strings, redirection, and parameter expansion to template pages. Below is a minimal example of how <i>Liber Brunoniana</i> templates its articles; we create a universal page template, and sub-templates that pipe into it:</p>
-    
+
     <script src="https://gist.github.com/jswrenn/982a0dd9bfb484b12c5e.js"></script>
-    
+
     <p>Better yet, since this is bash, the document relationships we've already expressed as shell scripts integrate seamlessly.</p>
   </section>
 
   <section><h3 id="build">Build Process</h3>
-  <p>Make, very nearly, is the perfect companion to Stiki because of Stiki's one-to-one correspondence of dependencies and artifacts. However, it is Stiki's closeness to the filesystem that renders Make unusable. Because Stiki uses file names as page titles, page titles are limited to any valid file name. This allows spaces as article titles by preserving spaces in filenames, a capability <i>Liber Brunoniana</i> uses extensively. Unfortunately, Make prohibits spaces in filenames. I'm not aware of any Make-like build systems that do not have this limitation. (Suggestions welcome!) For now, we work around this with a short build script written in Bash.</p>
+    <p>Make, very nearly, is the perfect companion to Stiki because of Stiki's one-to-one correspondence of dependencies and artifacts. However, it is Stiki's closeness to the filesystem that renders Make unusable. Because Stiki uses file names as page titles, page titles are limited to any valid file name. This allows spaces as article titles by preserving spaces in filenames, a capability <i>Liber Brunoniana</i> uses extensively. Unfortunately, Make prohibits spaces in filenames. I'm not aware of any Make-like build systems that do not have this limitation. (Suggestions welcome!) For now, we work around this with a short build script written in Bash.</p>
   </section>
 </section>
 
 <section><h2 id="presentation">Presentation</h2>
-<p>This project, as a whole, grew out of a conviction that the presentation of history need not itself be historic. The navigational transformations we applied to the text are only part of the presentation experience; the aesthetics of the presentation is equally important. Designing an appropriate interface for presenting <i>Encyclopedia Brunoniana</i> was an act of reconciling history with modernity.</p>
+  <p>This project, as a whole, grew out of a conviction that the presentation of history need not itself be historic. The navigational transformations we applied to the text are only part of the presentation experience; the aesthetics of the presentation is equally important. Designing an appropriate interface for presenting <i>Encyclopedia Brunoniana</i> was an act of reconciling history with modernity.</p>
 
-<section><h3 id="flexibility">Youthful Flexibility</h3>
-  <p>Armed with the improvements of CSS3, the most critical aspects of which enjoy broad browser support, designing modern interfaces for the web is no longer a challenge. A subtle way to project an impression of modernity is to ensure that your interface feels tailor-made to the user's device. Sites that use mobile-only or desktop-only designs are doomed to neglect some set of users. Sites that dynamically present users two distinct interfaces depending on their device can be the worst of both worlds, shattering any expectation the user had of a consistent application interface.</p>
-  
-  <p>Through flexbox alone, <i>Liber Brunoniana</i>'s interface is adaptable enough that users at all resolutions see virtually the same interface. When considering the role of device-dependent layout, we considered the order in which elements demand the user's attention. A consistent design isn't one that enforces identical layouts across canvas sizes, it's one that enforces a consistent hierarchy of visual importance. On wide displays, <i>Liber Brunoniana</i> reduces white-space on the page with a sticky page navigation side bar to the left of the article.</p> 
-  
-  <figure>
-    <img src="http://i.imgur.com/GSIEo4e.png" alt="Liber Brunoniana on Wide Display" width="100%" height="auto" />
-    <figcaption><i>Liber Brunoniana</i> on a wide display. Article (blue) dominates user attention compared to page navigation element (green).</figcaption>
-  </figure>
-  
-  <p>Compared to this sidebar, the content of the article dominates the visual space, both in width and location (centered on the screen). However, as you decrease the width of the canvas, the dynamic-width article text occupies an increasingly small fraction of the screen and the fixed-width sidebar becomes a competitor for attention. To handle this scenario, <i>Liber Brunoniana</i> moves the sidebar to the preamble of the article on sufficently narrow displays.</p>
-  
-  <figure>
-    <img src="http://i.imgur.com/Hl7yE7B.png" alt="Liber Brunoniana on Narrow Display" width="100%" height="auto" />
-    <figcaption>As the display narrows, the navigation element becomes a competitor to the article content for attention.</figcaption>
-  </figure>
-</section>
+  <section><h3 id="flexibility">Youthful Flexibility</h3>
+    <p>Armed with the improvements of CSS3, the most critical aspects of which enjoy broad browser support, designing modern interfaces for the web is no longer a challenge. A subtle way to project an impression of modernity is to ensure that your interface feels tailor-made to the user's device. Sites that use mobile-only or desktop-only designs are doomed to neglect some set of users. Sites that dynamically present users two distinct interfaces depending on their device can be the worst of both worlds, shattering any expectation the user had of a consistent application interface.</p>
 
-<section><h3 id="authority">Typography of Authority</h3>
-  <p>By virtue of the medium, content published on the web suffers from an authority problem&mdash;the luminescent, evanescent frame of a web browser simply lacks the certainty of existence that eminates from a printed book; the dubious content of much of what's published on the web doesn't help either. The online edition of <i>Encyclopedia Brunoniana</i>, sharing its contents with the printed edition, has equal functional authority, but failed to project an equal <i>impression</i> of authority. <i>Liber Brunoniana</i> projects authority to the user by borrowing the lessons of print typography.</p>
-  <section><h4 id="trust">Types of Trust</h4>
-    <img src="http://klepas.org/openbaskerville/specimens/Updike-Printing-Types_1766-FryBaskerville-scan.png" width="100%" height="auto"></img>
-    <p>In a recent A/B <a href="http://opinionator.blogs.nytimes.com/2012/08/08/hear-all-ye-people-hearken-o-earth/">experiment</a> on readers, New York Times opinion writer Errol Morris tested (though not to academic standards) whether the typeface of a statement affected how likely readers were to believe it. Such an effect exists in folk knowledge; Comic Sans is notoriously unauthoritative, while Helvetica is prized for its neutral stateliness. As Morris's follow up article detailed, there is academic evidence for such an effect. The million-dollar question, however, is whether a typeface can go beyond neutrality and exert <i>authority</i>. Morris writes,</p>
-    <blockquote>
-      <p>The <em>conscious</em> awareness of Comic Sans promotes — at least among some people — contempt and summary dismissal. But is there a typeface that promotes, engenders a <em>belief</em> that a sentence is true? Or at least nudges us in that direction? And indeed there is.</p>
-      <p>It is Baskerville.</p>
-    </blockquote>
-    <p>Following an evidenced-based approach, <i>Liber Brunoniana</i> is set in <a href="http://www.impallari.com/projects/overview/libre-baskerville">Libre Baskerville</a>. This improved on an earlier iteration of the site set in the <a href="http://iginomarini.com/fell/">Fell Types</a> in aesthetics, readability, and performance.</p>
-    </blockquote>
-  </section>
-  <section><h4 id="width">Watch the Width</h4>
-    <p>The rule of thumb to limit line lengths to 45-75 characters is perhaps the strongest enrichment that can be made to web typography, and with very little effort. We used <a href="https://css-tricks.com/bookmarklet-colorize-text-45-75-characters-line-length-testing/">Chris Coyier's bookmarklet</a> to settle on a <code>max-width</code> of 50em for article content.</p>
-  </section>
-  <section><h4 id="weight">Weigh Importance</h4>
-    <p>The pleasent typography of <i>Liber Brunoniana</i>&mdash;not developed by designers&mdash;would not have been possible without tools like <a href="http://type-scale.org/">Type-Scale.org</a>, a web application choosing visually appealing 'scales' of text sizes for headings. <i>Liber Brunoniana</i> uses an augmented fourth scale for wide-display clients, and a perfect fourth scale for narrow display clients.</p>
-  </section>
-  <section><h4 id="columns">Ditch the Columns</h4>
-    <p>Columnar layouts are one of the most compelling new features of CSS, but their use on <i>Liber Brunoniana</i> is limited to the print media version of the site, and category listings.</p>
-    <p>In print, columns are a panacea, at once improving both legibility and information density. What works well in one medium, however, does not necessarily translate well to others. The choice to use columns effects a fundamental change in how the eye traverses the content: rather than strictly up-to-down, a print columnar design limits column height to the field of view of the eye so that the reader ‘scrolls’ their vision horizontally. It’s an inversion of the consumption model we’re used to on the web.</p>
-    <p>The key here is limited vertical field of view. The web favors vertical scrolling and websites have an effectively limitless vertical dimension; when that content spills out of the viewport, a scrollbar is simply added. Applying columns to a vertically-limitless design arbitrarily bisects the content at the midway point.</p>
-  </section>
-  <section><h4 id="print">Embrace Print</h4>
-    <p>More specifically, embrace print stylesheets. <i>Encyclopedia Brunoniana</i> feels authoritative in the print form, and <i>Liber Brunoniana</i>'s web presentation (with some effort) feels authoritative, too. While digitizing a book is a herculean effort, converting a web page is as simple as <kbd>Ctrl+P</kbd>; your users <i>will</i> do it. <i>Liber Brunoniana</i> retains authority in its printed form by using a print-targeting media query.</p>
-    <p>As a general check-list:
-    <ul><li>Remove navigation elements</li>
-        <li>Layout remaining elements appropriately</li>
-        <li>Choose print-appropriate font sizes</li>
-        <li>Limit line length</li>
-        <li>Consider using columns, but expect flaky browser support</li>
-    </ul>
-    </p>
-    <p>Applying these considerations, a modern browser can produce a print of a <i>Liber Brunoniana</i> article approaching the quality of a document typeset with LaTeX.</p>
+    <p>Through flexbox alone, <i>Liber Brunoniana</i>'s interface is adaptable enough that users at all resolutions see virtually the same interface. When considering the role of device-dependent layout, we considered the order in which elements demand the user's attention. A consistent design isn't one that enforces identical layouts across canvas sizes, it's one that enforces a consistent hierarchy of visual importance. On wide displays, <i>Liber Brunoniana</i> reduces white-space on the page with a sticky page navigation side bar to the left of the article.</p>
+
     <figure>
-      <img src="http://i.imgur.com/cjTmvko.png" style="border:2px black solid;" width="100%" height="auto"></img>
-      <figcaption>Firefox's print rendering of <i>Liber Brunoniana</i>. Webkit-based browsers do not yet support multiple columns in print.</figcaption>
+      <img src="//i.imgur.com/GSIEo4e.png" alt="Liber Brunoniana on Wide Display" width="100%" height="auto" />
+      <figcaption><i>Liber Brunoniana</i> on a wide display. Article (blue) dominates user attention compared to page navigation element (green).</figcaption>
     </figure>
+
+    <p>Compared to this sidebar, the content of the article dominates the visual space, both in width and location (centered on the screen). However, as you decrease the width of the canvas, the dynamic-width article text occupies an increasingly small fraction of the screen and the fixed-width sidebar becomes a competitor for attention. To handle this scenario, <i>Liber Brunoniana</i> moves the sidebar to the preamble of the article on sufficently narrow displays.</p>
+
+    <figure>
+      <img src="//i.imgur.com/Hl7yE7B.png" alt="Liber Brunoniana on Narrow Display" width="100%" height="auto" />
+      <figcaption>As the display narrows, the navigation element becomes a competitor to the article content for attention.</figcaption>
+    </figure>
+  </section>
+
+  <section><h3 id="authority">Typography of Authority</h3>
+    <p>By virtue of the medium, content published on the web suffers from an authority problem&mdash;the luminescent, evanescent frame of a web browser simply lacks the certainty of existence that eminates from a printed book; the dubious content of much of what's published on the web doesn't help either. The online edition of <i>Encyclopedia Brunoniana</i>, sharing its contents with the printed edition, has equal functional authority, but failed to project an equal <i>impression</i> of authority. <i>Liber Brunoniana</i> projects authority to the user by borrowing the lessons of print typography.</p>
+  
+    <section><h4 id="trust">Types of Trust</h4>
+      <img src="//i.imgur.com/KrDpa9D.png" width="100%" height="auto"></img>
+      <p>In a recent A/B <a href="//opinionator.blogs.nytimes.com/2012/08/08/hear-all-ye-people-hearken-o-earth/">experiment</a> on readers, New York Times opinion writer Errol Morris tested (though not to academic standards) whether the typeface of a statement affected how likely readers were to believe it. Such an effect exists in folk knowledge; Comic Sans is notoriously unauthoritative, while Helvetica is prized for its neutral stateliness. As Morris's follow up article detailed, there is academic evidence for such an effect. The million-dollar question, however, is whether a typeface can go beyond neutrality and exert <i>authority</i>. Morris writes,</p>
+      <blockquote>
+        <p>The <em>conscious</em> awareness of Comic Sans promotes — at least among some people — contempt and summary dismissal. But is there a typeface that promotes, engenders a <em>belief</em> that a sentence is true? Or at least nudges us in that direction? And indeed there is.</p>
+        <p>It is Baskerville.</p>
+      </blockquote>
+      <p>Following an evidenced-based approach, <i>Liber Brunoniana</i> is set in <a href="//www.impallari.com/projects/overview/libre-baskerville">Libre Baskerville</a>. This improved on an earlier iteration of the site set in the <a href="//iginomarini.com/fell/">Fell Types</a> in aesthetics, readability, and performance.</p>
+    </section>
+    <section><h4 id="width">Watch the Width</h4>
+      <p>The rule of thumb to limit line lengths to 45-75 characters is perhaps the strongest enrichment that can be made to web typography, and with very little effort. We used <a href="https://css-tricks.com/bookmarklet-colorize-text-45-75-characters-line-length-testing/">Chris Coyier's bookmarklet</a> to settle on a <code>max-width</code> of 50em for article content.</p>
+    </section>
+    <section><h4 id="weight">Weigh Importance</h4>
+      <p>The pleasent typography of <i>Liber Brunoniana</i>&mdash;not developed by designers&mdash;would not have been possible without tools like <a href="//type-scale.org/">Type-Scale.org</a>, a web application choosing visually appealing 'scales' of text sizes for headings. <i>Liber Brunoniana</i> uses an augmented fourth scale for wide-display clients, and a perfect fourth scale for narrow display clients.</p>
+    </section>
+    <section><h4 id="columns">Ditch the Columns</h4>
+      <p>Columnar layouts are one of the most compelling new features of CSS, but their use on <i>Liber Brunoniana</i> is limited to the print media version of the site, and category listings.</p>
+      <p>In print, columns are a panacea, at once improving both legibility and information density. What works well in one medium, however, does not necessarily translate well to others. The choice to use columns effects a fundamental change in how the eye traverses the content: rather than strictly up-to-down, a print columnar design limits column height to the field of view of the eye so that the reader ‘scrolls’ their vision horizontally. It’s an inversion of the consumption model we’re used to on the web.</p>
+      <p>The key here is limited vertical field of view. The web favors vertical scrolling and websites have an effectively limitless vertical dimension; when that content spills out of the viewport, a scrollbar is simply added. Applying columns to a vertically-limitless design arbitrarily bisects the content at the midway point.</p>
+    </section>
+    <section><h4 id="print">Embrace Print</h4>
+      <p>More specifically, embrace print stylesheets. <i>Encyclopedia Brunoniana</i> feels authoritative in the print form, and <i>Liber Brunoniana</i>'s web presentation (with some effort) feels authoritative, too. While digitizing a book is a herculean effort, converting a web page is as simple as <kbd>Ctrl+P</kbd>; your users <i>will</i> do it. <i>Liber Brunoniana</i> retains authority in its printed form by using a print-targeting media query.</p>
+      <p>As a general check-list:
+        <ul><li>Remove navigation elements</li>
+            <li>Layout remaining elements appropriately</li>
+            <li>Choose print-appropriate font sizes</li>
+            <li>Limit line length</li>
+            <li>Consider using columns, but expect flaky browser support</li>
+            </ul>
+      </p>
+      <p>Applying these considerations, a modern browser can produce a print of a <i>Liber Brunoniana</i> article approaching the quality of a document typeset with LaTeX.</p>
+      <figure>
+        <img src="//i.imgur.com/cjTmvko.png" style="border:2px black solid;" width="100%" height="auto"></img>
+        <figcaption>Firefox's print rendering of <i>Liber Brunoniana</i>. Webkit-based browsers do not yet support multiple columns in print.</figcaption>
+      </figure>
+    </section>
   </section>
 </section>
 
 <section><h2 id="future">Further Work</h2>
   <p>If <i>Encyclopedia Brunoniana</i> is to remain the definitive reference of Brown's history for decades to come, it will be as a living document. <i>Liber Brunoniana</i> is one step towards creating an infrastructure to support a growable, accessible, historical record. The ink is far from dry on <i>Liber Brunoniana</i>. At the time of writing, this represents a minimal presentable effort. In the coming months,
-  <ul>
-  <li>the text will continue to be classified into categories</li>
-  <li>the datify process will be refined to exclude likely quantities but include the trailing two digits of year ranges</li>
-  <li>the HTML markup of site content will be converted to a more expressive wiki-text</li>
-  <li>following improvements to authorship will come improvements to presentation</li>
-  <li>support will be added for media pages, bringing <i>Encyclopedia Brunoniana</i> to life with historic images</li>
-  </ul>
-  …and much more.
-   </p>
-
+  <ul><li>the text will continue to be classified into categories</li>
+      <li>the datify process will be refined to exclude likely quantities but include the trailing two digits of year ranges</li>
+      <li>the HTML markup of site content will be converted to a more expressive wiki-text</li>
+      <li>following improvements to authorship will come improvements to presentation</li>
+      <li>support will be added for media pages, bringing <i>Encyclopedia Brunoniana</i> to life with historic images</li>
+  </ul> …and much more.</p>
   <p><a href="https://github.com/liber-brunoniana"><i>Liber Brunoniana</i> is open-source, and hosted on Github.</a></p>
-</section>
-
 </section>

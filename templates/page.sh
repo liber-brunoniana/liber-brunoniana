@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 if [ -z "${BASE+x}" ] ; then
   BASE=$(readlink -f .. | xargs printf 'file://%s/build/');
 fi

@@ -1,6 +1,6 @@
-#!/bin/sh
-. ../util.sh
-NAME=`basename "$1" .html`
+#!/usr/bin/env bash
+. ../templates/util.sh
+NAME=`basename "$1" .png`
 if [ "$NAME" == "index" ] ; then
   NAME=$(dirname $1)
   if [ "$NAME" == "." ] ; then 
@@ -24,8 +24,14 @@ fi
       `categories "$1"`
     </nav>
   </nav>
-  <section>
-    `cat "$1"`
-  </section>
+  <figure>
+    <img src="$1" width="100%" height="auto">
+    <figcaption>
+      <h2 name="file_usage">File Usage</h2>
+      <ul>`
+        
+      `</ul>
+    </figcaption>
+  </figure>
 </article>
 _EOF_

@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+function li() {
+  xargs -r0 printf "<li>%s</li>"
+}
+
 function categories() {
   find -L . -samefile "$1" -print0  \
     | xargs -0 dirname -z           \
@@ -13,6 +17,6 @@ function categories() {
       if [ "$name" == "." ] ; then 
         name="$SITE_NAME"
       fi
-      echo "<li><a href=\"$href\">$name</a></li>"
-    done
+      printf "<a href=\"%s\">$name</a>\0" "$href"
+    done | li
 }
