@@ -56,8 +56,14 @@ aside {
 }
 
 figure {
+  max-height: 100vh;
+  text-align:center;
   padding: 0.5em 0;
   border-width: 1px 0;
+}
+
+figure > figcaption {
+  text-align: left;
 }
 
 blockquote {
@@ -65,11 +71,11 @@ blockquote {
   padding-right: 1em;
   border-width: 0 0 0 1px;
 }
-/*
-cite::before {
+
+li cite::before {
     color: grey;
     content: "—from ";
-}*/
+}
 
 /*****************************POSITIONING******************************/
 article {
