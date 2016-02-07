@@ -21,8 +21,12 @@ h6 {
 }
 
 h1,
-nav > h2  {margin: 0;}
+nav > h2 {margin: 0;}
 p         {margin: 0.5em 0;}
+
+#subcategories h2 {
+  margin-top:1rem;
+}
 
 h4,
 h5,
@@ -55,11 +59,16 @@ aside {
   border-width: 1px 0;
 }
 
-figure {
+figure img {
   max-height: 100vh;
+  max-width: 100%;
+}
+
+figure {
   text-align:center;
   padding: 0.5em 0;
   border-width: 1px 0;
+  overflow: hidden;
 }
 
 figure > figcaption {
@@ -72,9 +81,14 @@ blockquote {
   border-width: 0 0 0 1px;
 }
 
+li {
+    margin-bottom: 0.2em;
+    margin-left: 1em;
+}
+
 li cite::before {
     color: grey;
-    content: "—from ";
+    content: "â€”from ";
 }
 
 /*****************************POSITIONING******************************/
@@ -104,6 +118,7 @@ article > section {
   margin: 0 auto;
   max-width: 40em;
   flex: 1 0 65vw;
+  min-width: 20em;
 }
 
 /**********************************************************************/
@@ -111,17 +126,14 @@ article > section {
 body > header {
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   text-align: center;
-  
   position: fixed;
   height: 20vmin;
-  width: 100vw;
-  
+  width: 100%;
   font-size: 6vmin;
   color: white;
   background: black;
-  
   background-image: url('https://i.imgur.com/U4qgKje.png');
   background-size: cover;
   background-position: center;
@@ -139,3 +151,104 @@ body > main {
   min-height: 100vh;
 }
 /**********************************************************************/
+
+
+@media only print {
+  /* Print Type Scale (Make headings a little smaller) */
+  html  {font-size:    10pt;}
+  h1    {font-size: 2.441em;}
+  h2    {font-size: 1.953em;}
+  h3    {font-size: 1.563em;}
+  h4    {font-size: 1.25em;}
+  small {font-size: 0.8em;}
+
+  body {
+    margin:0;
+    overflow:visible!important;
+  }
+
+  figure {
+    display:none;
+    max-height:initial;
+    position: static;
+  }
+  
+  /* Avoid Page Breaks inside Headers */
+  h1, h2, h3, h4, .gist-file {
+    break-after:avoid;
+    page-break-after:avoid;
+    page-break-inside:avoid;
+    break-after: avoid;
+    page-break-after: avoid;
+    -webkit-column-break-after: avoid;
+  }
+  
+  /* Avoid Orphans & Widows */
+  section, p {
+    widows: 3;
+    orphans: 3;
+  }
+  
+  /* Indent First Paragraph after Header */
+  h1 + p, h2 + p, h3 + p, h4 + p, 
+  p:first-child {
+    text-indent: 1em;
+  }
+
+  body > header {
+     display:none;
+     position:static;
+     clear:both;
+     height:initial;
+     width:initial;
+     background: none;
+     font-size:1em;
+  }
+
+  body > main {
+    top:0;
+  }
+
+  article {
+    display:block;
+  }
+
+  article > section {
+    display: static;
+    max-width: 50em;
+  }
+
+  article > nav {
+    display:none;
+  }
+  
+  article > header {
+    position:relative;
+    display:block;
+    margin:1em;
+    clear:both;
+    border: none;
+    text-align:center;
+  }
+  
+  
+  #site-header {
+    font-size: 50%;
+    font-variant: small-caps;
+  }
+  
+  /* Since you can't use hyperlinks in print, make them the same color
+   * as text */
+  a, a:visited {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  @-moz-document url-prefix() { 
+    article > section {
+      max-width: initial;
+      -moz-column-gap: 2em;  
+      -moz-column-width: 20em;
+    }
+  }
+}
