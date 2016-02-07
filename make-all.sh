@@ -10,7 +10,7 @@ find . -type d -print0 \
   do
    (target="../build/$source"
     mkdir -p "$target"
-    ../templates/category.sh "$source" > "$target/index.html") &
+    ../templates/category.sh "$source" > "$target/index.html")
   done
 
 find . -type f -name "*.html" -print0 \
@@ -23,7 +23,7 @@ find . -type f -name "*.html" -print0 \
         [ -e "$target" ] && rm "$target"
         mkdir -p `dirname "../build/$target"`
         ../templates/article.sh "$source" > "$target"
-      fi) &
+      fi)
     done && wait
     
 find . -type f -name "*.png" -print0 \
@@ -36,7 +36,7 @@ find . -type f -name "*.png" -print0 \
         [ -e "$target" ] && rm "$target"
         mkdir -p `dirname "../build/$target"`
         ../templates/article.sh "$source" > "$target"
-      fi) &
+      fi)
     done && wait
 
     
