@@ -121,6 +121,13 @@ article > section {
   min-width: 20em;
 }
 
+#subcategories > ul:empty:before {
+    content: 'No topics belong to this category.';
+}
+#pages > ul:empty:before {
+    content: 'No pages belong to this category.';
+}
+
 /**********************************************************************/
 
 body > header {
