@@ -88,7 +88,7 @@ li {
 
 li cite::before {
     color: grey;
-    content: "â€”from ";
+    content: "—from ";
 }
 
 /*****************************POSITIONING******************************/
@@ -127,7 +127,14 @@ article > section {
 #pages > ul:empty:before {
     content: 'No pages belong to this category.';
 }
-
+#category {
+  max-width: inital;
+}
+#pages > ul {
+  columns: 20em;
+  -webkit-columns: 20em;
+  -moz-columns: 20em;
+}
 /**********************************************************************/
 
 body > header {
